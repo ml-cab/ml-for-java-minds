@@ -1,0 +1,53 @@
+version: 1
+project:
+  title: "ML for Java Minds"
+  subtitle: "A practical field guide to machine learning and LLMs, for people who think in classes, interfaces, and compile errors"
+  authors:
+    - name: "Your Name"
+  toc:
+    - file: index.md
+    - title: "Part I. Beginner: ML Literacy for Java Minds"
+      children:
+        - file: part1/01-machine-learning-without-mystery.md
+        - file: part1/02-if-else-to-learned-behaviour.md
+        - file: part1/03-data-features-labels.md
+        - file: part1/04-supervised-unsupervised-generative.md
+        - file: part1/05-neural-networks-as-layers-of-math.md
+        - file: part1/06-training-vs-inference.md
+        - file: part1/07-what-is-a-language-model.md
+        - file: part1/08-why-python-dominates-ml.md
+        - file: part1/09-vectors-and-similarity.md
+    - title: "Part II. Intermediate: LLMs and Practical Paths"
+      children:
+        - file: part2/10-embeddings-101.md
+        - file: part2/11-vector-databases-ann-indexes.md
+        - file: part2/12-prompt-engineering-for-engineers.md
+        - file: part2/13-structured-output.md
+        - file: part2/14-temperature-top-p-top-k.md
+        - file: part2/15-function-calling-tool-use.md
+        - file: part2/16-gguf-and-quantization.md
+        - file: part2/17-openai-compatible-apis.md
+        - file: part2/18-rag-for-java-teams.md
+        - file: part2/19-prompt-injection.md
+        - file: part2/20-safety-and-guardrails.md
+        - file: part2/21-evaluating-llm-output.md
+    - title: "Part III. Advanced: Fine-Tuning, Performance, Ops"
+      children:
+        - file: part3/22-fine-tuning-vs-prompting-vs-rag.md
+        - file: part3/23-preparing-a-fine-tuning-dataset.md
+        - file: part3/24-lora-explained.md
+        - file: part3/25-merge-adapters-into-gguf.md
+        - file: part3/26-cpu-vs-gpu-inference.md
+        - file: part3/27-profiling-llm-workloads-with-jfr.md
+        - file: part3/28-memory-kv-cache-session-affinity.md
+        - file: part3/29-continuous-batching.md
+    - title: "Part IV. Professional: Distributed Systems & Production ML on the JVM"
+      children:
+        - file: part4/30-pipeline-vs-tensor-parallelism.md
+        - file: part4/31-production-serving-patterns.md
+        - file: part4/32-observability-for-llm-apps.md
+        - file: part4/33-model-and-prompt-versioning.md
+        - file: part4/34-compliance-for-generative-apps.md
+    - file: references.md
+site:
+  template: book-theme
