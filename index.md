@@ -68,4 +68,3 @@ Four parts, thirty-four chapters:
 **Back matter**
 
 - [References](references.md) — the peer-reviewed and official sources behind the book's general ML/LLM/distributed-systems claims
-- [ref.md](ref.md) — the Juno project documentation consulted for Juno-specific examples

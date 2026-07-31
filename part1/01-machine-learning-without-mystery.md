@@ -1,26 +1,35 @@
 (ch-01)=
-# 1. Machine Learning Without the Mystery: A Developer's Mental Model
-A machine learning process is a function. That's it. `F(input) -> output`. The mystery isn't in what it is, because it's in how it got written. Let's compare two ways of producing a result: programming function and inference engine:
+# 1. Machine Learning Without the Mystery
+ 
+A machine learning model (ML) is a function. `F(input) -> output`. That's the whole thing.
+ 
+The mystery is not in *what* it is. It's in *how it got written*.
+ 
+If in traditional code you write the rules. `if (age >= 18) return true;` You reasoned about the problem, you typed it in. The implementation lives in source you can read, review, and test. 
 
-- **We write code** `if (age >= 18) return true;` We reasoned about the rule and typed it in.
-
-- **A model learns from examples.** Nobody writes `if`. Instead, we show the function thousands of examples of inputs and correct outputs, and an algorithm adjusts internal numbers (called **parameters** or **weights**) until the function's guesses match the examples closely enough, using gradient search math.
-
-Think of it like a `Function<Input, Output>` whose implementation is not source code but a very large array of `double`s, plus a fixed procedure (matrix multiplications, mostly) for turning input numbers into output numbers using those `double`s.
-
+In ML nobody writes the rules for the model. Instead, you feed it thousands of examples: inputs paired with correct outputs. An algorithm adjusts internal numbers, called **weights** or **parameters**, until the function's outputs match those examples closely enough. The implementation doesn't live in source code. It lives in a very large array of `double`s, plus a fixed procedure for turning input numbers into output numbers using those `double`s.
+ 
+Think of it as `Function<Input, Output>` whose body is not logic you wrote but a matrix of floats, and the execution is: multiply input by weights, pass through an activation function, repeat across layers until you get an output.
+ 
 ```mermaid
 flowchart LR
-    I1[Input] --> L[Business logic<br/>you wrote] --> O1[Output]
-    I2[Input] --> W[Parameters / weights<br/>already learned by training] --> O2[Output]
+    I1[Input] --> L["Business logic\nyou wrote"] --> O1[Output]
+    I2[Input] --> W["Weights\nlearned by training"] --> O2[Output]
 ```
-
+ 
 Three ideas carry the rest of this book:
-
-1. **Training** is the process of *searching* for good parameter values, using data as the search signal. So called Backward Path in ML.
-2. **Inference** is *running* the already-trained function on new input: this is the part that looks like calling a method in production. So called Forward Path in ML.
-3. **A model** is only as good as the function it approximates. It won't magically know things outside the patterns in its training data, the same way a method you never tested won't magically handle edge cases you never considered.
-
-**Why this matters for Java developers** We already understand the training/inference split intuitively, because it maps to compile-time vs. runtime, which is [Chapter 6](#ch-06). You already understand "the code is only as good as its test coverage": the ML equivalent is "the model is only as good as its training data," [Chapter 3](#ch-03). Nothing here requires you to abandon engineering instincts; it requires you to redirect them at a new kind of artifact: a weights file instead of a `.jar`.
+ 
+**Training** is searching for good weight values. You feed data. An algorithm computes how wrong the outputs are, then nudges every weight in the direction that reduces that error - layer by layer, backward through the network. This is the so-called Backward Pass. The optimizer steering those nudges is the blessed `ADAM` gradient algorithm. It is genuinely the most magical part, and later we will gets into how it actually works [Chapter 6](#ch-06).
+ 
+**Inference** is running the already-trained function on new input. The Forward Pass. Input goes in, output comes out. Deterministic matrix math. This is the part that looks like calling a method in production - fast, repeatable, no learning happening.
+ 
+**The model** is the artifact in ML. Not a source code. A binary file containing all the learned weights, physically distributed the same way a `.jar` distributes bytecode: you ship it, you load it, you run it. It just happens to be gigabytes instead of megabytes, and what's inside is floating-point matrices instead of JVM instructions. It won't magically know things outside its training data, same way a method you never tested won't magically handle edge cases you never wrote a case for.
+ 
+---
+ 
+**Why this maps cleanly for Java developers.** The training vs inference split is compile-time vs. runtime - a distinction you've internalized deeply. Training is slow, expensive, done once or occasionally. Inference is fast, done on every request. A model is only as good as its training data [Chapter 3](#ch-03), same as code is only as good as its test coverage. Nothing here requires you to abandon engineering instincts. It requires redirecting them at a new kind of artifact: a weights file instead of a `.jar`.
+ 
+That's the mental model. The rest of the book builds on it.
 
 ---
 

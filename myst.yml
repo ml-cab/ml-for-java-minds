@@ -3,7 +3,7 @@ project:
   title: "ML for Java Minds"
   subtitle: "A practical field guide to machine learning and LLMs, for people who think in classes, interfaces, and compile errors"
   authors:
-    - name: "Your Name"
+    - name: "https://ml.cab"
   toc:
     - file: index.md
     - title: "Part I. Beginner: ML Literacy for Java Minds"
@@ -51,3 +51,8 @@ project:
     - file: references.md
 site:
   template: book-theme
+  options:
+    logo_text: "Machine Learning Cabinet"
+    logo_url: /
+  parts:
+    primary_sidebar_footer: empty-footer.md

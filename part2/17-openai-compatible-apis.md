@@ -31,6 +31,8 @@ var request = HttpRequest.newBuilder(URI.create(baseUrl + "/v1/chat/completions"
 // baseUrl is the only thing that changes between OpenAI, llama.cpp, Ollama, or Juno
 ```
 
+**Further reading:** OpenAI. [Chat Completions API reference](https://platform.openai.com/docs/api-reference/chat) — the de facto wire-format standard this chapter is built around.
+
 ---
 
 [← Chapter 16: GGUF and Quantization: How Big Models Fit on Ordinary Hardware](#ch-16) &nbsp;|&nbsp; [Table of Contents](../index.md) &nbsp;|&nbsp; [Chapter 18: RAG for Java Teams: Retrieve Documents, Then Ask the Model →](#ch-18)

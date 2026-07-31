@@ -8,6 +8,7 @@ A 34-chapter book, built as a [Jupyter Book](https://jupyterbook.org) (MyST Docu
 ml-for-java-minds/
 ├── myst.yml              # project config + table of contents (chapter order)
 ├── index.md               # front matter, "how to read this book", full TOC
+├── references.md          # Back matter - official sources behind this book
 ├── part1/                 # Beginner:      chapters 1-9
 ├── part2/                 # Intermediate:  chapters 10-21
 ├── part3/                 # Advanced:      chapters 22-29
@@ -49,7 +50,8 @@ natively in the built site.
 ## Building
 
 ```bash
-./build.sh          # build static HTML into _build/html
+./build.sh              # build AND launch a working local preview automatically
+./build.sh build-only   # just build _build/html, no server (for CI/deploy)
 ./build.sh serve     # live-reloading local preview
 ./build.sh clean     # remove build artifacts
 ```

@@ -15,7 +15,7 @@ The operational takeaway: obtaining a model file and reviewing its license is *y
 
 **Fine-tuned and merged models raise their own, distinct question ([Chapter 25](#ch-25) revisited from a legal rather than technical angle).** A `.lora` adapter's legal status as a "derivative work" is genuinely unsettled and jurisdiction-dependent, so the conservative, safe default is to treat it as a derivative of the base model and apply the base model's license terms to it. A **merged** GGUF ([Chapter 25](#ch-25)) is more clearly a derivative work than the small adapter alone was, because it physically contains the base model's weights combined with your trained delta in one artifact. Before redistributing a merged model outside your own infrastructure: confirm the base model's license actually permits redistribution of derivative works at all, confirm your own training data doesn't introduce a *separate* copyright question, and include any required attribution.
 
-**The EU AI Act, and why "the engine is compliant" is close to a category error.** The Act regulates **AI systems**: the deployed combination of engine, model, and specific use case, not inference infrastructure in the abstract. An inference engine is, in the Act's own vocabulary, closer to "third-party infrastructure" than to an "AI system provider" itself; the entity that deploys the engine plus a model and makes the resulting system available to end users is the one carrying most of the regulatory obligations.
+**The EU AI Act, and why "the engine is compliant" is close to a category error.** The Act — formally [Regulation (EU) 2024/1689](../references.md#ref-euaiact) — regulates **AI systems**: the deployed combination of engine, model, and specific use case, not inference infrastructure in the abstract. An inference engine is, in the Act's own vocabulary, closer to "third-party infrastructure" than to an "AI system provider" itself; the entity that deploys the engine plus a model and makes the resulting system available to end users is the one carrying most of the regulatory obligations.
 
 ```mermaid
 flowchart TD
@@ -35,6 +35,8 @@ None of this is a reason to avoid building generative AI features: it's a reason
 ---
 
 *This is not legal advice; consult qualified counsel for decisions specific to your deployment, jurisdiction, and use case. It is, however, a starting checklist that will save you from the most common and most avoidable mistakes.*
+
+**Further reading:** European Parliament and Council of the European Union. (2024). [Regulation (EU) 2024/1689 laying down harmonised rules on artificial intelligence](https://eur-lex.europa.eu/eli/reg/2024/1689/oj) (Artificial Intelligence Act). *Official Journal of the European Union*.
 
 ---
 
