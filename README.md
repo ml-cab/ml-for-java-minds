@@ -2,6 +2,8 @@
 
 A 34-chapter book, built as a [Jupyter Book](https://jupyterbook.org) (MyST Document Engine) static site.
 
+![](ml-4-java-minds.jpg)
+
 ## Structure
 
 ```

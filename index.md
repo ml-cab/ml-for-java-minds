@@ -2,6 +2,12 @@
 
 *A practical field guide to machine learning and LLMs, written for people who think in classes, interfaces, and compile errors.*
 
+```{image} ml-4-java-minds.jpg
+:alt: ML for Java Minds cover
+:width: 800px
+:align: center
+```
+
 ---
 
 **How to read this book**
