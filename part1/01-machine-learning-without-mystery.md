@@ -13,8 +13,8 @@ Think of it as `Function<Input, Output>` whose body is not logic you wrote but a
  
 ```mermaid
 flowchart LR
-    I1[Input] --> L["Business logic\nyou wrote"] --> O1[Output]
-    I2[Input] --> W["Weights\nlearned by training"] --> O2[Output]
+    I1[Input] --> L["Business logic you wrote"] --> O1[Output]
+    I2[Input] --> W["Weights learned by training"] --> O2[Output]
 ```
  
 Three ideas carry the rest of this book:
@@ -30,7 +30,5 @@ Three ideas carry the rest of this book:
 **Why this maps cleanly for Java developers.** The training vs inference split is compile-time vs. runtime - a distinction you've internalized deeply. Training is slow, expensive, done once or occasionally. Inference is fast, done on every request. A model is only as good as its training data [Chapter 3](#ch-03), same as code is only as good as its test coverage. Nothing here requires you to abandon engineering instincts. It requires redirecting them at a new kind of artifact: a weights file instead of a `.jar`.
  
 That's the mental model. The rest of the book builds on it.
-
----
 
 [Table of Contents](../index.md) &nbsp;|&nbsp; [Chapter 2: From if/else Rules to Learned Behaviour: When Models Replace Hard-Coded Logic →](#ch-02)

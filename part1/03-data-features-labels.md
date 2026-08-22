@@ -22,7 +22,11 @@ record TrainingExample(
 
 A crucial and very Java-flavored point: **feature engineering is schema design.** Choosing which fields to expose to the model, how to normalize them, and how to encode categories (one-hot encoding a `zip code` field is a lot like turning an `enum` into a bitmask) is where most of the actual engineering work in a classic ML project lives, not in the algorithm itself.
 
+The algorithm often changes very little. What changes is the amount and quality of data. Many breakthroughs in machine learning over the last decade came not from inventing radically different algorithms, but from combining: larger datasets, larger models, faster GPUs, and more compute.
+
 **Garbage in, garbage out** is not a cliché here, it's the whole ballgame. If your labels are wrong (mislabeled spam), noisy (inconsistent human judgment calls), or the features don't actually correlate with the label (using shoe size to predict credit risk), no algorithm, however famous, will save you. Data quality review is the ML equivalent of code review, and it deserves the same rigor.
+
+Experienced ML teams often spend 70–80% of a project's time collecting, cleaning, labeling, validating, and maintaining datasets rather than tuning neural networks. Building reliable data pipelines usually matters more than inventing a new model architecture.
 
 ---
 

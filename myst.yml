@@ -3,7 +3,7 @@ project:
   title: "ML for Java Minds"
   subtitle: "A practical field guide to machine learning and LLMs, for people who think in classes, interfaces, and compile errors"
   authors:
-    - name: "https://ml.cab"
+    - name: "Dmitry Soloviev"
   toc:
     - file: index.md
     - title: "Part I. Beginner: ML Literacy for Java Minds"
