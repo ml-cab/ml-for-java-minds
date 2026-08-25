@@ -2,6 +2,8 @@
 # 3. Data, Features, Labels: How a Dataset Looks If You Think in POJOs
 Every supervised ML dataset is, structurally, a list of objects. If you've ever built a training set in your head as a `List<TrainingExample>`, you already understand this chapter.
 
+That input-output pairing isn't just a convenient metaphor for engineers, it's the literal object supervised learning optimizes over: a function that maps features to a label, fitted from examples instead of hand-written rules. It's also worth knowing this simple structure scales surprisingly well: [Halevy, Norvig & Pereira (2009)](../references.md#ref-unreasonable-data) made the influential argument that, past a certain point, more (even messy) data tends to beat a cleverer algorithm, a big part of why data quality and volume dominate the rest of this chapter.
+
 ```java
 record TrainingExample(
     Map<String, Double> features,  // the inputs the model sees

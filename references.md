@@ -5,6 +5,20 @@ Sources for the general machine learning, LLM, and distributed-systems material 
 
 ## Part I — Beginner
 
+(ref-unreasonable-data)=
+### Halevy, Norvig & Pereira (2009) — The Unreasonable Effectiveness of Data
+
+Halevy, A., Norvig, P., & Pereira, F. (2009). The Unreasonable Effectiveness of Data. *IEEE Intelligent Systems*, 24(2), 8–12. https://doi.org/10.1109/MIS.2009.36
+
+*The argument that, at sufficient scale, simple models trained on large amounts of (even noisy) data tend to outperform cleverer hand-crafted theories — cited in [Chapter 3](part1/03-data-features-labels.md) as the research framing behind why data quality and volume dominate classic ML work.*
+
+(ref-gan)=
+### Goodfellow et al. (2014) — Generative Adversarial Networks
+
+Goodfellow, I. J., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D., Ozair, S., Courville, A., & Bengio, Y. (2014). Generative Adversarial Networks. *NeurIPS 2014*. arXiv:1406.2661. https://arxiv.org/abs/1406.2661
+
+*The paper that framed generative modeling as learning to sample from the training data's distribution via an adversarial generator/discriminator game — cited in [Chapter 4](part1/04-supervised-unsupervised-generative.md) as a landmark in making "learn the distribution, then sample" a mainstream technique.*
+
 (ref-backprop)=
 ### Rumelhart, Hinton & Williams (1986)
 

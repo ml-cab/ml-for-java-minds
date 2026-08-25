@@ -4,6 +4,8 @@ Before [Chapter 10](#ch-10) introduces embeddings properly, you need one geometr
 
 A vector here is just what it is in any graphics or physics code you've written: an ordered array of numbers, `double[]` or `float[]`, but instead of representing a position in 3D space, it represents a position in a space with hundreds or thousands of dimensions, where "nearby" means "semantically similar."
 
+That's a strange claim to take on faith, and the last section of this chapter gets into why it holds at all. First, though, it helps to pin down how "nearby" is actually computed, because the arithmetic itself is unglamorous, the same multiply-and-sum you'd already write to compute a lighting angle or a projection in a graphics or physics routine.
+
 Two standard ways to measure "nearby":
 
 **Dot product**: multiply corresponding elements and sum:

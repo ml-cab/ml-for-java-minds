@@ -1,6 +1,6 @@
 (ch-06)=
 # 6. Training vs Inference: Compile-Time Thinking vs Runtime Serving
-This mental model will save you more confusion than any other in the book.
+This mental model will save you more confusion than any other in the book — not about speed, but about memory. The most common misconception isn't performance-related at all: it's assuming a conversation teaches the model something, when in fact nothing but the context window survives past that one inference call; the weights don't change, and the next session starts exactly where the model was before you ever typed a word. Here's that split laid out against a build-and-run cycle you already know cold.
 
 | | Compiling Java | Training a model |
 |---|---|---|

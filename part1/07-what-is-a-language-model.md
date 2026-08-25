@@ -1,6 +1,6 @@
 (ch-07)=
 # 7. What Is a Language Model? Tokens, Context Windows, and Why Chat Bots Feel Magical
-Strip away the mystique and a large language model is a function with an unglamorous job: given a sequence of text, predict what comes next. Nearly every model behind that function today, from the smallest local model to the largest hosted one, is built from the same architecture: the Transformer, introduced by [Vaswani et al. (2017)](../references.md#ref-attention) in the paper whose title says it all, "Attention Is All You Need."
+Strip away the mystique and a large language model is a function with an unglamorous job: given a sequence of text, predict what comes next. Nearly every model behind that function today, from the smallest local model to the largest hosted one, is built from the same architecture: the Transformer, introduced by [Vaswani et al. (2017)](../references.md#ref-attention) in the paper whose title says it all, "Attention Is All You Need." No reasoning engine, no grammar rules, no symbolic planner sits underneath any of it, just one function, called over and over, guessing the single most likely next token.
 
 ```
 predict_next(["The", "capital", "of", "France", "is"]) -> "Paris"

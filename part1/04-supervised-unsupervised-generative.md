@@ -10,12 +10,13 @@ If ML techniques were design patterns, here's the cheat sheet:
 
 **Generative AI**: the newest member, and the odd one out. Instead of predicting a label or finding structure, it learns the underlying *distribution* of the data well enough to produce brand-new, plausible examples: new text, new images, new code. A large language model (LLM) is a generative model trained, at its core, on a deceptively simple supervised task, predicting the next word, applied at a scale that makes the resulting function able to write essays, translate, and summarize.
 
-```mermaid
-flowchart LR
-    A["Supervised:<br/>(input, correct output) pairs"] --> B[Learn the mapping]
-    C["Unsupervised:<br/>input only"] --> D[Learn the structure]
-    E["Generative:<br/>massive input"] --> F[Learn to produce new,<br/>similar output]
-```
+| The need | Use case learning |
+|---|---|
+| Learn the mapping | **Supervised**: (input, correct output) pairs |
+| Learn the structure | **Unsupervised**: input only, no labels |
+| Learn to produce new, similar output | **Generative**: massive input, learn the distribution |
+
+The three categories above aren't just a tidy taxonomy, each rests on a different learning signal, and the boundary between them is where a lot of ML research actually happens. The generative case is the newest and least intuitive: rather than fitting a mapping or discovering structure, the model learns a probability distribution over the data itself, so it can be sampled to produce new, plausible examples. That idea got a major push from [Goodfellow et al. (2014)](../references.md#ref-gan), whose Generative Adversarial Networks paper framed generation as a two-model game, one network generating candidates, another judging them, and is one of the papers that made "learn the distribution, then sample from it" a mainstream ML technique rather than a niche one.
 
 | Pattern analogy | ML equivalent | Typical use |
 |---|---|---|

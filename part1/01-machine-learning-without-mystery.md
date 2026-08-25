@@ -4,6 +4,8 @@
 A machine learning model (ML) is a function. `F(input) -> output`. That's the whole thing.
  
 The mystery is not in *what* it is. It's in *how it got written*.
+
+Every piece of software you've ever shipped falls into one of exactly two categories once you ask where its logic came from: did a person reason it out and type it in, or did an algorithm search for it by trial and error against data? Traditional code sits firmly in the first category, and that's the easiest place to start before contrasting it with the second.
  
 If in traditional code you write the rules. `if (age >= 18) return true;` You reasoned about the problem, you typed it in. The implementation lives in source you can read, review, and test. 
 

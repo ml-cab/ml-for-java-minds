@@ -1,6 +1,6 @@
 (ch-05)=
 # 5. Neural Networks as Layers of Math: Matrices You Already Met in Graphics and Games
-If you've ever multiplied a 4x4 matrix by a vertex to rotate a 3D model, you've already done the core operation of a neural network. A neural network layer is, mechanically, this:
+If you've ever multiplied a 4x4 matrix by a vertex to rotate a 3D model, you've already done the core operation of a neural network. Everything people call "deep learning magic" reduces to that same primitive, multiply-then-add, repeated across billions of learned numbers and dozens or hundreds of layers instead of the handful of fixed transforms in a graphics pipeline. A neural network layer is, mechanically, this:
 
 ```
 output = activation(W * input + b)
