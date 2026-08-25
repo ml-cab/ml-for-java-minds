@@ -15,17 +15,7 @@ flowchart LR
     end
 ```
 
-```mermaid
-flowchart TD
-    DS[Document store] -->|chunk + embed| VI[Vector index]
-    UQ[User question] -->|embed| VI
-    VI -->|similarity search| TK[top-K relevant chunks]
-    TK --> P["Prompt: 'Using ONLY this context, answer...'"]
-    P --> LLM[LLM]
-    LLM --> ANS["Answer grounded in YOUR data,<br/>not just training data"]
-```
-
-This is, structurally, the same shape as a search-then-render web application: you're building a retrieval pipeline ([Chapter 11](#ch-11)'s job) and a rendering step, except the "rendering" is an LLM synthesizing a fluent answer from retrieved passages instead of a template engine populating HTML. If you've built faceted search before, you already understand most of the plumbing; the new part is the prompt-construction step and the final generation call.
+This is, structurally, the same shape as a search-then-render web application: you're building a retrieval pipeline ([Chapter 11](#ch-11)'s job) and a rendering step, except the "rendering" is an LLM synthesizing a fluent answer from retrieved passages instead of a template engine populating HTML. If you've built faceted search before, you already understand most of the plumbing; the new part is the prompt-construction step below and the final generation call.
 
 A minimal Java sketch:
 

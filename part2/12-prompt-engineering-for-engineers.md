@@ -33,7 +33,7 @@ Good: "You are a support-ticket summarizer. Output exactly 2 sentences,
 
 The "good" version works better for the same reason a well-specified Javadoc reduces bugs: it removes ambiguity about the *shape* of the expected answer, not just its content.
 
-**Common failure modes** worth naming explicitly, because recognizing them is 80% of debugging prompts:
+**Common failure modes** worth naming explicitly, because recognizing them is most of the battle when debugging a prompt that isn't working:
 
 - **Underspecification**: the model fills gaps with plausible-sounding guesses (this is a major source of hallucination, see [Chapter 20](#ch-20)). If you don't specify the output format, you'll get a different format every time.
 - **Instruction dilution**: burying the actual instruction in a wall of context. Put the task instruction close to where the model will generate, often *after* the context, not just before it.
