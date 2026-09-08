@@ -1,7 +1,7 @@
 (references)=
 # References
 
-Sources for the general machine learning, LLM, and distributed-systems material in this book — everything in Parts I–IV that is *not* specific to the Juno project (those sources are listed separately in [ref.md](ref.md)). Entries are grouped by the chapter they support, with the original publication venue and, where one exists, the arXiv identifier so you can pull the full text directly. Every entry was verified against its original source (arXiv abstract page, ACM/USENIX/IEEE publisher page, or the official EUR-Lex text) before being added here.
+Sources for the general machine learning, LLM, and distributed-systems material in this book — everything in Parts I–V that is *not* specific to a particular inference tool's implementation details (those sources, for Juno, llama.cpp, and LocalAI, are listed separately in [rtfms.md](rtfms.md), short for "Read The F\*\*\*ing ManualS," this book's running joke about actually reading the docs before citing them). Entries here are grouped by the chapter they support, with the original publication venue and, where one exists, the arXiv identifier so you can pull the full text directly. Every entry was verified against its original source (arXiv abstract page, ACM/USENIX/IEEE publisher page, or the official EUR-Lex text) before being added here.
 
 ## Part I — Beginner
 
@@ -89,7 +89,7 @@ Frantar, E., Ashkboos, S., Hoefler, T., & Alistarh, D. (2022). GPTQ: Accurate Po
 
 Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., Küttler, H., Lewis, M., Yih, W., Rocktäschel, T., Riedel, S., & Kiela, D. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. *NeurIPS 2020*. arXiv:2005.11401. https://arxiv.org/abs/2005.11401
 
-*The paper that coined "RAG" and established the retrieve-then-generate pattern [Chapter 18](part2/18-rag-for-java-teams.md) is built around.*
+*The paper that coined "RAG" and established the retrieve-then-generate pattern — first cited in [Chapter 6](part1/06-training-vs-inference.md) as the third rung of the weights/context/retrieval ladder, and the basis for [Chapter 18](part2/18-rag-for-java-teams.md) in full.*
 
 (ref-promptinjection)=
 ### Greshake et al. (2023) — Indirect Prompt Injection
@@ -119,14 +119,14 @@ Zheng, L., Chiang, W.-L., Sheng, Y., Zhuang, S., Wu, Z., Zhuang, Y., Lin, Z., Li
 
 Hu, E. J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., Wang, L., & Chen, W. (2021). LoRA: Low-Rank Adaptation of Large Language Models. arXiv:2106.09685. https://arxiv.org/abs/2106.09685
 
-*The LoRA paper — freezing the base weights and learning low-rank adapter matrices — is the technique underlying [Chapter 24](part3/24-lora-explained.md) and [Chapter 25](part3/25-merge-adapters-into-gguf.md) in full (Juno's specific implementation details are documented in [ref.md](ref.md), not in this paper).*
+*The LoRA paper — freezing the base weights and learning low-rank adapter matrices — first cited in [Chapter 6](part1/06-training-vs-inference.md) when explaining that fine-tuning on commodity hardware is now practical, and underlying [Chapter 24](part3/24-lora-explained.md) and [Chapter 25](part3/25-merge-adapters-into-gguf.md) in full (specific inference-tool implementations, Juno, llama.cpp, and LocalAI, are documented in [rtfms.md](rtfms.md)).*
 
 (ref-pagedattention)=
 ### Kwon et al. (2023) — PagedAttention / vLLM
 
 Kwon, W., Li, Z., Zhuang, S., Sheng, Y., Zheng, L., Yu, C. H., Gonzalez, J. E., Zhang, H., & Stoica, I. (2023). Efficient Memory Management for Large Language Model Serving with PagedAttention. *SOSP 2023*. arXiv:2309.06180. https://arxiv.org/abs/2309.06180
 
-*The paging-inspired approach to KV cache memory management referenced in [Chapter 28](part3/28-memory-kv-cache-session-affinity.md).*
+*The paging-inspired approach to KV cache memory management — first cited in [Chapter 6](part1/06-training-vs-inference.md) as the key technique distinguishing vLLM in the on-premise engine table, and covered in depth in [Chapter 28](part3/28-memory-kv-cache-session-affinity.md).*
 
 (ref-orca)=
 ### Yu et al. (2022) — Orca
@@ -151,6 +151,99 @@ European Parliament and Council of the European Union. (2024). Regulation (EU) 2
 
 *The primary legal text behind the risk-tier framework (prohibited / high-risk / limited-risk / minimal-risk) and the Article 50 transparency obligation discussed in [Chapter 34](part4/34-compliance-for-generative-apps.md).*
 
+## Part V — Beyond LLMs
+
+(ref-random-forests)=
+### Breiman (2001) — Random Forests
+
+Breiman, L. (2001). Random Forests. *Machine Learning*, 45(1), 5–32. https://doi.org/10.1023/A:1010933404324
+
+*The ensemble-of-trees algorithm covered in [Chapter 35](part5/35-classical-ml-regression-trees-ensembles.md).*
+
+(ref-xgboost)=
+### Chen & Guestrin (2016) — XGBoost
+
+Chen, T., & Guestrin, C. (2016). XGBoost: A Scalable Tree Boosting System. *KDD 2016*, 785–794. arXiv:1603.02754. https://arxiv.org/abs/1603.02754
+
+*The gradient-boosted tree system discussed alongside random forests in [Chapter 35](part5/35-classical-ml-regression-trees-ensembles.md).*
+
+(ref-adam)=
+### Kingma & Ba (2015) — Adam
+
+Kingma, D. P., & Ba, J. (2015). Adam: A Method for Stochastic Optimization. *ICLR 2015*. arXiv:1412.6980. https://arxiv.org/abs/1412.6980
+
+*The adaptive optimizer behind the vast majority of modern training runs, including the LoRA loop in [Chapter 24](part3/24-lora-explained.md) — covered directly in [Chapter 36](part5/36-loss-functions-gradient-descent-bias-variance.md).*
+
+(ref-dropout)=
+### Srivastava et al. (2014) — Dropout
+
+Srivastava, N., Hinton, G., Krizhevsky, A., Sutskever, I., & Salakhutdinov, R. (2014). Dropout: A Simple Way to Prevent Neural Networks from Overfitting. *Journal of Machine Learning Research*, 15(1), 1929–1958. https://jmlr.org/papers/v15/srivastava14a.html
+
+*The regularization technique discussed as a defense against overfitting in [Chapter 36](part5/36-loss-functions-gradient-descent-bias-variance.md).*
+
+(ref-roc)=
+### Fawcett (2006) — ROC Analysis
+
+Fawcett, T. (2006). An Introduction to ROC Analysis. *Pattern Recognition Letters*, 27(8), 861–874. https://doi.org/10.1016/j.patrec.2005.10.010
+
+*The threshold-independent evaluation technique covered in [Chapter 37](part5/37-evaluating-classical-models.md).*
+
+(ref-resnet)=
+### He et al. (2016) — Deep Residual Learning (ResNet)
+
+He, K., Zhang, X., Ren, S., & Sun, J. (2016). Deep Residual Learning for Image Recognition. *CVPR 2016*, 770–778. arXiv:1512.03385. https://arxiv.org/abs/1512.03385
+
+*Residual connections, which made very deep CNNs trainable — covered in [Chapter 39](part5/39-computer-vision-cnns-diffusion.md).*
+
+(ref-ddpm)=
+### Ho, Jain & Abbeel (2020) — Denoising Diffusion Probabilistic Models
+
+Ho, J., Jain, A., & Abbeel, P. (2020). Denoising Diffusion Probabilistic Models. *NeurIPS 2020*. arXiv:2006.11239. https://arxiv.org/abs/2006.11239
+
+*The iterative-denoising technique behind modern image generation, discussed in [Chapter 39](part5/39-computer-vision-cnns-diffusion.md).*
+
+(ref-lstm)=
+### Hochreiter & Schmidhuber (1997) — Long Short-Term Memory
+
+Hochreiter, S., & Schmidhuber, J. (1997). Long Short-Term Memory. *Neural Computation*, 9(8), 1735–1780. https://doi.org/10.1162/neco.1997.9.8.1735
+
+*The gated recurrent architecture that partially fixed vanishing gradients before Transformers replaced recurrence outright — the historical anchor for [Chapter 40](part5/40-rnns-to-transformers.md).*
+
+(ref-rlhf)=
+### Christiano et al. (2017) — Deep RL from Human Preferences
+
+Christiano, P. F., Leike, J., Brown, T., Martic, M., Legg, S., & Amodei, D. (2017). Deep Reinforcement Learning from Human Preferences. *NeurIPS 2017*. arXiv:1706.03741. https://arxiv.org/abs/1706.03741
+
+*Formalizes learning a reward model from human preference rankings rather than a hand-written reward function — the technique underlying RLHF, covered in [Chapter 41](part5/41-reinforcement-learning-and-rlhf.md).*
+
+(ref-instructgpt)=
+### Ouyang et al. (2022) — InstructGPT
+
+Ouyang, L., Wu, J., Jiang, X., Almeida, D., Wainwright, C. L., Mishkin, P., Zhang, C., Agarwal, S., Slama, K., Ray, A., Schulman, J., Hilton, J., Kelton, F., Miller, L., Simens, M., Askell, A., Welinder, P., Christiano, P., Leike, J., & Lowe, R. (2022). Training Language Models to Follow Instructions with Human Feedback. *NeurIPS 2022*. arXiv:2203.02155. https://arxiv.org/abs/2203.02155
+
+*Applies RLHF at scale to produce an instruction-following chat model — the direct ancestor of ChatGPT's training recipe, discussed in [Chapter 41](part5/41-reinforcement-learning-and-rlhf.md).*
+
+(ref-hidden-debt)=
+### Sculley et al. (2015) — Hidden Technical Debt in Machine Learning Systems
+
+Sculley, D., Holt, G., Golovin, D., Davydov, E., Phillips, T., Ebner, D., Chaudhary, V., Young, M., Crespo, J.-F., & Dennison, D. (2015). Hidden Technical Debt in Machine Learning Systems. *NeurIPS 2015*, 2503–2511. https://proceedings.neurips.cc/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html
+
+*The foundational argument that ML-specific glue code, not the modeling code itself, is where most production ML technical debt accumulates — the framing behind [Chapter 42](part5/42-mlops-for-classical-ml.md).*
+
+(ref-clip)=
+### Radford et al. (2021) — CLIP
+
+Radford, A., Kim, J. W., Hallacy, C., Ramesh, A., Goh, G., Agarwal, S., Sastry, G., Askell, A., Mishkin, P., Clark, J., Krueger, G., & Sutskever, I. (2021). Learning Transferable Visual Models From Natural Language Supervision. *ICML 2021*, 8748–8763. arXiv:2103.00020. https://arxiv.org/abs/2103.00020
+
+*Joint image/text embedding training, the bridge technique behind vision-language models and text-to-image generation, discussed in [Chapter 43](part5/43-agents-and-multimodality.md).*
+
+(ref-scaling-laws)=
+### Kaplan et al. (2020) — Scaling Laws for Neural Language Models
+
+Kaplan, J., McCandlish, S., Henighan, T., Brown, T. B., Chess, B., Child, R., Gray, S., Radford, A., Wu, J., & Amodei, D. (2020). Scaling Laws for Neural Language Models. arXiv:2001.08361. https://arxiv.org/abs/2001.08361
+
+*The empirical power-law relationship between loss, model size, data size, and compute — the basis for [Chapter 44](part5/44-pretraining-at-scale.md).*
+
 ## General / cross-cutting
 
 (ref-openai-api)=
@@ -171,7 +264,7 @@ OpenTelemetry Authors. OpenTelemetry documentation. https://opentelemetry.io/doc
 
 ## A note on how this list was built
 
-Every entry above was verified by web search against its original source (arXiv abstract page, ACM/USENIX/IEEE publisher page, or the official EUR-Lex text) rather than pulled from memory, specifically to avoid citing a paper with the wrong year, venue, or author list. Where a chapter's content is general engineering practice rather than a single traceable result — for example, the if/else-vs-model heuristics in Chapter 2, the training/inference build-vs-serve analogy in Chapter 6, or the health-dashboard and versioning patterns in Chapters 31 and 33 — no citation is given, because the material reflects standard software engineering practice rather than a specific research claim. Citing a paper for content it doesn't actually support would be a worse outcome than citing nothing.
+Every entry above was verified by web search against its original source (arXiv abstract page, ACM/USENIX/IEEE publisher page, or the official EUR-Lex text) rather than pulled from memory, specifically to avoid citing a paper with the wrong year, venue, or author list. Where a chapter's content is general engineering practice rather than a single traceable result — for example, the if/else-vs-model heuristics in Chapter 2, or the health-dashboard and versioning patterns in Chapters 31 and 33 — no citation is given, because the material reflects standard software engineering practice rather than a specific research claim. Chapter 6's training/inference analogy is similarly general practice, but it now does cite LoRA, RAG, and PagedAttention where those specific techniques are named. Citing a paper for content it doesn't actually support would be a worse outcome than citing nothing. Documentation for the specific inference tools mentioned throughout the book (Juno, llama.cpp, LocalAI) lives in [rtfms.md](rtfms.md), verified the same way, against each project's live docs.
 
 ---
 

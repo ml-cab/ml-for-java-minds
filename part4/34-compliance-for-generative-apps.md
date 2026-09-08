@@ -40,4 +40,4 @@ None of this is a reason to avoid building generative AI features: it's a reason
 
 ---
 
-[← Chapter 33: Model and Prompt Versioning: Rollout, Rollback, and A/B Testing for Non-Deterministic Systems](#ch-33) &nbsp;|&nbsp; [Table of Contents](../index.md)
+[← Chapter 33: Model and Prompt Versioning: Rollout, Rollback, and A/B Testing for Non-Deterministic Systems](#ch-33) &nbsp;|&nbsp; [Table of Contents](../index.md) &nbsp;|&nbsp; [Chapter 35: Classical ML: Regression, Trees, and Ensembles →](../part5/35-classical-ml-regression-trees-ensembles.md)

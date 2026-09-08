@@ -30,7 +30,7 @@ A learned model doesn't encode "if message contains smell" It encodes statistica
 
 This isn't a value judgment, because `if/else` is *usually* the right tool, testable, debuggable, and free of surprises. Reach for a model only when hard-coded logic keeps failing for the same structural reason: **reality has too many exceptions** to fit in code you can review.
 
-Spam filtering is a classic example because it demonstrates concept drift—the statistical properties of the data change over time. So if you can describe the rule precisely, write code. If you need a thing to discover the rule from examples, train a model.
+Spam filtering is a classic example because it demonstrates concept drift, the statistical properties of the data change over time. So if you can describe the rule precisely, write code. If you need a thing to discover the rule from examples, train a model.
 
 A practical rule of thumb: **keep the boring 80% in plain code, and let the model own only the fuzzy 20%.** E.g. a billing system may use `if/else` for tax rules and a model (if anything) only for fraud-likelihood scoring. Mixing both code for the parts you can specify exactly and models for the parts you can't, brings some balance in our rapid learning world.
 

@@ -10,8 +10,14 @@ None of this means your production Java service needs a Python subprocess bolted
 
 Two escape hatches exist today:
 
-1. **Talk to a model server over a standard wire protocol.** Tools like **llama.cpp**'s server mode and **Ollama** expose an OpenAI-compatible REST API (`POST /v1/chat/completions`). Your Java code just becomes an HTTP client, with no Python dependency in your own deployment at all, because the model server is a separate, independently-operated process (often not even written in Python: llama.cpp is C++).
-2. **Run inference inside the JVM itself, with no subprocess at all.** This is the harder but more integrated option, and it's exactly what a project like **Juno** (`cab.ml`) is built for: it reads GGUF model files directly and runs the full transformer forward pass in pure Java, using `java.lang.foreign` (Panama FFI) to talk to CUDA/ROCm directly for GPU acceleration: no JNI wrapper library, no Python, no separate process to keep alive. A Java service can embed a chat model the same way it embeds any other library dependency:
+1. **Talk to a model server over a standard wire protocol.** Your Java code just becomes an HTTP client, with no Python dependency in your own deployment at all, because the model server is a separate, independently-operated process. Several genuinely different engines all converge on the same OpenAI-compatible `POST /v1/chat/completions` contract, which is worth knowing since they make very different trade-offs underneath it:
+   - **llama.cpp**'s server mode (`llama-server`) and **Ollama** (which wraps llama.cpp with model management ergonomics): a single C++ process, no Python at all in the serving path.
+   - **vLLM**: a Python, GPU-first engine (`vllm serve MODEL`) built specifically to maximize throughput at scale rather than run comfortably on a laptop; it's also where PagedAttention, cited in [Chapter 28](#ch-28), originated ([vLLM OpenAI-Compatible Server](../rtfms.md#ref-vllm-openai-api)).
+   - **Hugging Face's Text Generation Inference (TGI)**: an unusual split architecture, a Rust HTTP router handling batching and scheduling, talking over gRPC to a separate Python process that actually runs the model, OpenAI-compatible since its "Messages API" ([TGI Messages API](../rtfms.md#ref-tgi-openai-api)).
+   - **LocalAI**: a Go binary explicitly built around drop-in OpenAI (and Anthropic) API compatibility, with model backends installed on demand as separate processes over gRPC rather than compiled into one binary ([LocalAI Overview](../rtfms.md#ref-localai-openai-api)).
+
+   Every one of these is a different language, a different process architecture, and a different set of trade-offs, yet from your Java client's perspective they're indistinguishable: same JSON contract, same `base_url` swap, [Chapter 17](#ch-17) covers this in depth.
+2. **Run inference inside the JVM itself, with no subprocess at all.** It's exactly what a project like **Juno** (`cab.ml`) is built for: it reads GGUF model files directly and runs the full transformer forward pass in pure Java, using `java.lang.foreign` (Panama FFI) to talk to CUDA/ROCm directly for GPU acceleration: no JNI wrapper library, no Python, no separate process to keep alive.
 
 ```java
 try (JunoPlayer player = JunoPlayer.builder(Path.of("/models/model.gguf"))
@@ -20,6 +26,8 @@ try (JunoPlayer player = JunoPlayer.builder(Path.of("/models/model.gguf"))
     System.out.println(result.text());
 }
 ```
+
+*(the `JunoPlayer` builder and `.chat()` facade shown above, [Juno Documentation §1.3](../rtfms.md#ref-juno-jvm-embedding))*
 
 The takeaway isn't "Python bad, Java good": it's that **the language the model was trained in has nothing to do with the language that must serve it.** A GGUF file is a portable, language-agnostic weights format. Pick the serving path (subprocess-via-HTTP, or in-process-via-JVM) based on your operational constraints, not habit.
 

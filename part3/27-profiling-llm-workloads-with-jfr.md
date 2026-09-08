@@ -14,6 +14,8 @@ A well-instrumented inference engine exposes custom JFR event types at each laye
 
 This layered breakdown matters because it lets you answer *where* time is going, not just *that* time is going somewhere: precisely the difference between a flat total-request-latency metric and a proper distributed trace with spans. "Generation is slow" could mean the matmul itself is the bottleneck (suggesting a GPU/quantization/hardware question, [Chapter 26](#ch-26)), or that tokenization is unexpectedly expensive (a data/preprocessing question), or that something entirely outside the model, network or queueing, is eating the time.
 
+JFR is one legitimate answer to "how do I see what my inference server is actually doing," but it's a JVM-specific one, and it's worth knowing the other two common answers so you recognize them elsewhere. llama.cpp's server takes the ops-standard route instead: an opt-in `--metrics` flag exposes a Prometheus-format `/metrics` endpoint with counters like total prompt and generation tokens, meant to be scraped continuously by Prometheus/Grafana rather than recorded and inspected after the fact ([llama.cpp Server README](../rtfms.md#ref-llamacpp-metrics)). LocalAI takes a third approach: rather than a scrape endpoint or a recording file, it retains a bounded, persistent history of recent API exchanges and backend operations, browsable live on a "Traces" page in its own management UI ([LocalAI Tracing](../rtfms.md#ref-localai-tracing)). All three are solving the same problem, live scrape metric, retained request history, or a detailed after-the-fact recording, and the right choice depends on whether you want continuous dashboards, ad-hoc request inspection, or the kind of fine-grained, per-operation profiling JFR gives you.
+
 A key metric worth understanding precisely: **tokens per second (TPS)**, the primary throughput number reported in any LLM performance comparison. It's derived, not separately tracked: computed from the span between the first and last "token produced" event and the total count in that window:
 
 ```
@@ -32,6 +34,8 @@ For distributed inference ([Chapter 30](#ch-30)), each JVM process, coordinator 
 java -cp metrics/target/metrics-*.jar cab.ml.juno.metrics.MetricsMain
 cat target/metrics/metrics.json
 ```
+
+*(the `--jfr DURATION` flag, the `juno.*` custom event catalog, and `MetricsMain` extraction shown above, [Juno Documentation §7.1](../rtfms.md#ref-juno-jfr-metrics))*
 
 Open the raw `.jfr` file in JDK Mission Control for interactive exploration, the same tool you'd already reach for diagnosing a GC or lock-contention issue in an ordinary Java service, and the event browser view works identically: filter to `ForwardPass`, sort by `durationMs` p95, and you have a concrete, reproducible target for optimization instead of a vague impression that "it feels slow."
 

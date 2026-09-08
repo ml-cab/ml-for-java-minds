@@ -43,7 +43,7 @@ Why should this work at all? Why would "meaning" correspond to geometric directi
 
 This one idea, turning things into vectors and measuring closeness with cosine or dot product, is the mathematical foundation underneath semantic search, recommendation systems, RAG ([Chapter 18](#ch-18)), and vector databases ([Chapter 11](#ch-11)). Once it clicks, a large fraction of "AI-powered search" products stop looking like magic and start looking like an indexing problem you already know how to reason about.
 
-**Further reading:** Mikolov, T., Chen, K., Corrado, G., & Dean, J. (2013). [Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/abs/1301.3781). arXiv:1301.3781 — the word2vec paper establishing that training on context produces geometrically meaningful embeddings.
+**Further reading:** Mikolov, T., Chen, K., Corrado, G., & Dean, J. (2013). [Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/abs/1301.3781). arXiv:1301.3781 - the word2vec paper establishing that training on context produces geometrically meaningful embeddings.
 
 ---
 

@@ -14,12 +14,15 @@
 
 You don't need a PhD, and you don't need to learn Python first. Every chapter builds on the last one, but each is also short enough to read on a coffee break. Code and command examples lean on tools you can run today: **llama.cpp**, **Ollama**, and **Juno**. Where a Java analogy helps, we use it. Where a diagram helps more than a paragraph, we draw one as a Mermaid diagram so it renders visually in any editor or viewer that supports it.
 
-Four parts, thirty-four chapters:
+Five parts, forty-four chapters:
 
 - **Beginner**: ML literacy for Java minds (1-9)
 - **Intermediate**: LLMs and practical paths (10-21)
 - **Advanced**: Fine-tuning, performance, ops (22-29)
 - **Professional**: Distributed systems & production ML on the JVM (30-34)
+- **Beyond LLMs**: Classical ML, vision, and the rest of the field (35-44)
+
+A scoping note on that last part, and on the book as a whole: Parts I-IV are deliberately focused on **LLM engineering for Java developers**, not general machine learning. Part V exists to fill in the classical-ML, computer-vision, and training-theory material that a text-focused book like this one would otherwise skip entirely, so readers get an honest map of what "machine learning" covers beyond language models.
 
 ---
 
@@ -71,6 +74,20 @@ Four parts, thirty-four chapters:
 - **33.** [Model and Prompt Versioning: Rollout, Rollback, and A/B Testing for Non-Deterministic Systems](part4/33-model-and-prompt-versioning.md)
 - **34.** [Compliance for Generative Apps: Licenses, Merged Weights, and EU AI Act Reality Checks](part4/34-compliance-for-generative-apps.md)
 
+**Part V. Beyond LLMs: Classical ML, Vision, and the Rest of the Field**
+
+- **35.** [Classical ML: Regression, Trees, and Ensembles Before You Ever Touch a Transformer](part5/35-classical-ml-regression-trees-ensembles.md)
+- **36.** [Loss Functions, Gradient Descent, and the Bias-Variance Trade-off](part5/36-loss-functions-gradient-descent-bias-variance.md)
+- **37.** [Evaluating Classical Models: Precision, Recall, ROC-AUC, and Confusion Matrices](part5/37-evaluating-classical-models.md)
+- **38.** [Feature Engineering: Encoding, Scaling, and Missing Data](part5/38-feature-engineering.md)
+- **39.** [Computer Vision: CNNs, Detection, Segmentation, and Diffusion Models](part5/39-computer-vision-cnns-diffusion.md)
+- **40.** [From RNNs to Transformers: Why Attention Won](part5/40-rnns-to-transformers.md)
+- **41.** [Reinforcement Learning and RLHF: How Chat Models Learn to Be Helpful](part5/41-reinforcement-learning-and-rlhf.md)
+- **42.** [MLOps for Classical ML: Feature Stores, Experiment Tracking, and Data Versioning](part5/42-mlops-for-classical-ml.md)
+- **43.** [Agents and Multimodality: Planning, Memory, and Vision-Language Models](part5/43-agents-and-multimodality.md)
+- **44.** [Pretraining at Scale: Data, Tokenizers, and Scaling Laws](part5/44-pretraining-at-scale.md)
+
 **Back matter**
 
-- [References](references.md) — the peer-reviewed and official sources behind the book's general ML/LLM/distributed-systems claims
+- [References](references.md) - the peer-reviewed and official sources behind the book's general ML/LLM/distributed-systems claims
+- [rtfms.md](rtfms.md) - documentation for the specific inference tools mentioned throughout the book (Juno, llama.cpp, LocalAI), compared side by side on the same topics: quickstart, OpenAI-compatible APIs, LoRA training vs. inference-only adapter loading, merging, and observability

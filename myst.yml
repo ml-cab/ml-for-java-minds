@@ -48,7 +48,20 @@ project:
         - file: part4/32-observability-for-llm-apps.md
         - file: part4/33-model-and-prompt-versioning.md
         - file: part4/34-compliance-for-generative-apps.md
+    - title: "Part V. Beyond LLMs: Classical ML, Vision, and the Rest of the Field"
+      children:
+        - file: part5/35-classical-ml-regression-trees-ensembles.md
+        - file: part5/36-loss-functions-gradient-descent-bias-variance.md
+        - file: part5/37-evaluating-classical-models.md
+        - file: part5/38-feature-engineering.md
+        - file: part5/39-computer-vision-cnns-diffusion.md
+        - file: part5/40-rnns-to-transformers.md
+        - file: part5/41-reinforcement-learning-and-rlhf.md
+        - file: part5/42-mlops-for-classical-ml.md
+        - file: part5/43-agents-and-multimodality.md
+        - file: part5/44-pretraining-at-scale.md
     - file: references.md
+    - file: rtfms.md
 site:
   template: book-theme
   options:

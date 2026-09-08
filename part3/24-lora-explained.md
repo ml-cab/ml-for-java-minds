@@ -11,7 +11,7 @@ W_effective = W (frozen, unchanged)  +  scale * (B * A)
 
 `rank` is small (typically 4 to 16) versus `W`'s full dimensions, which are often in the thousands. This is the same idea as a git diff versus committing an entirely new file: instead of storing (and training) a new full-size weight matrix, you store a compact "patch" describing only the *delta* from the original, and that patch is dramatically smaller because the useful adaptation, empirically, tends to fit in a low-dimensional subspace of the full weight space.
 
-The size difference is not subtle. For rank-8 LoRA applied to just the query and value attention projections (`wq`, `wv`) across all 22 layers of a 1.1-billion-parameter TinyLlama model:
+The size difference is not subtle. For rank-8 LoRA applied to just the query and value attention projections (`wq`, `wv`) across all 22 layers of a 1.1-billion-parameter TinyLlama model ([Juno Documentation §4.1](../rtfms.md#ref-juno-lora-concepts)):
 
 | | Frozen base weights | LoRA adapter |
 |---|---|---|
@@ -20,6 +20,8 @@ The size difference is not subtle. For rank-8 LoRA applied to just the query and
 | Trainable? | No | Yes |
 
 That's roughly a **1,500x** reduction in the number of trainable, storable parameters, which is precisely why LoRA fine-tuning is practical on a single machine, even a laptop, for small models, where full fine-tuning would demand data-center-scale infrastructure.
+
+Worth knowing before picking a tool for this: not every popular local-inference project actually *trains* LoRA adapters. **llama.cpp**, despite being the engine underneath much of the local-LLM ecosystem, only *applies* adapters someone else already trained (`--lora FILE` at inference time, plus `POST /lora-adapters` for hot-swapping in its server) and *converts* PEFT-format adapters into its own GGUF format via `convert_lora_to_gguf.py`, it has no training loop of its own ([llama.cpp Server README](../rtfms.md#ref-llamacpp-lora)). **LocalAI**, by contrast, does train adapters directly through its own REST API (`POST /api/fine-tuning/jobs`, with `training_type: "lora"` as an option), making it the closer structural match to Juno's train-and-serve design covered in this chapter ([LocalAI Fine-Tuning](../rtfms.md#ref-localai-finetuning)). If a tool only documents *loading* LoRA files rather than *producing* them, that's not a missing feature you overlooked, it's a genuine scope difference between projects.
 
 ```mermaid
 flowchart LR
@@ -32,9 +34,9 @@ flowchart LR
 Two important operational properties fall directly out of this design:
 
 - **The base model is never touched.** LoRA training only ever updates `A` and `B`. This means one base GGUF file can serve many different specializations, each stored as a tiny `.lora` checkpoint file, without ever duplicating the multi-gigabyte base weights, a pattern much like sharing one base Docker image across many lightweight overlay layers.
-- **Adapters are swappable at inference time, read-only.** A well-built inference engine can apply a `.lora` file on top of the frozen base purely for that request's forward pass, with no risk of accidentally mutating shared model state: Juno's `--lora-play PATH` flag, for example, loads adapters strictly read-only during inference (`LoraTrainableHandler` wraps the base handler without ever writing back to the GGUF), and defaults to deterministic greedy decoding (temperature 0) specifically so that a trained fact is recalled *reliably* rather than being subject to the sampling randomness discussed in [Chapter 14](#ch-14), because a nearby base-model continuation could otherwise get sampled instead of the memorized answer.
+- **Adapters are swappable at inference time, read-only.** A well-built inference engine can apply a `.lora` file on top of the frozen base purely for that request's forward pass, with no risk of accidentally mutating shared model state: Juno's `--lora-play PATH` flag, for example, loads adapters strictly read-only during inference (`LoraTrainableHandler` wraps the base handler without ever writing back to the GGUF), and defaults to deterministic greedy decoding (temperature 0) specifically so that a trained fact is recalled *reliably* rather than being subject to the sampling randomness discussed in [Chapter 14](#ch-14), because a nearby base-model continuation could otherwise get sampled instead of the memorized answer ([Juno Documentation §4.4](../rtfms.md#ref-juno-inference-adapter)).
 
-A practical, hands-on training loop, using Juno's REPL as a concrete illustration of the pattern (any LoRA-capable trainer follows the same shape):
+A practical, hands-on training loop, using Juno's REPL as a concrete illustration of the pattern (any LoRA-capable trainer follows the same shape, [Juno Documentation §4.3](../rtfms.md#ref-juno-training-guide)):
 
 ```bash
 ./juno lora --model-path models/tinyllama.gguf
@@ -46,7 +48,7 @@ Behind that one command: gradients are computed only against `A` and `B` (the fr
 
 One nuance worth flagging honestly: LoRA is a strong default for many "specialize the behavior" tasks, but it is not free: it still requires clean training data ([Chapter 23](#ch-23)), it still needs evaluation ([Chapter 21](#ch-21)'s techniques apply directly), and rank selection is a real trade-off (rank 4 for quick experiments, rank 8 as a solid general default, rank 16+ for more complex style or domain adaptation) rather than a "bigger is always better" dial.
 
-**Further reading:** Hu, E. J. et al. (2021). [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685). arXiv:2106.09685.
+**Further reading:** Hu, E. J. et al. (2021). [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685). arXiv:2106.09685 · [Juno Documentation §4.1, Concepts](../rtfms.md#ref-juno-lora-concepts) and [§4.4, Inference with a Trained Adapter](../rtfms.md#ref-juno-inference-adapter), for Juno's specific implementation of the technique.
 
 ---
 

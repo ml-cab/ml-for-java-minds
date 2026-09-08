@@ -25,7 +25,7 @@ Each chapter is its own Markdown file, named `NN-slug.md` (e.g. `part1/06-traini
 - Every chapter starts with a MyST label: `(ch-06)=`
 - Every in-text mention of "Chapter N" / "Chapters N-M" was rewritten as a link to that
   label, e.g. `[Chapter 6](#ch-06)`. MyST resolves these project-wide, from any file,
-  regardless of chapter order — so nothing breaks if you reorder or insert chapters.
+  regardless of chapter order - so nothing breaks if you reorder or insert chapters.
 - Each chapter ends with a Previous / Table of Contents / Next navigation footer.
 
 ## Inserting a new chapter
@@ -41,7 +41,7 @@ Each chapter is its own Markdown file, named `NN-slug.md` (e.g. `part1/06-traini
    them to mention it by number.
 4. Rebuild: `./build.sh`
 
-Existing cross-references to other chapters keep working untouched — labels aren't
+Existing cross-references to other chapters keep working untouched - labels aren't
 positional, so nothing needs renumbering.
 
 ## Diagrams
@@ -63,7 +63,7 @@ The script checks for the `myst` CLI and installs it via `pip install mystmd` if
 
 ## Publishing
 
-`_build/html` is a complete static site — deploy it anywhere:
+`_build/html` is a complete static site - deploy it anywhere:
 
 - **GitHub Pages**: `myst init --gh-pages` generates a ready-to-use GitHub Actions workflow.
 - **Any static host** (Netlify, Cloudflare Pages, S3, nginx): just upload the contents of `_build/html`.
