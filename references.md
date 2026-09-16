@@ -1,4 +1,4 @@
-(references)=
+k(references)=
 # References
 
 Sources for the general machine learning, LLM, and distributed-systems material in this book — everything in Parts I–V that is *not* specific to a particular inference tool's implementation details (those sources, for Juno, llama.cpp, and LocalAI, are listed separately in [rtfms.md](rtfms.md), short for "Read The F\*\*\*ing ManualS," this book's running joke about actually reading the docs before citing them). Entries here are grouped by the chapter they support, with the original publication venue and, where one exists, the arXiv identifier so you can pull the full text directly. Every entry was verified against its original source (arXiv abstract page, ACM/USENIX/IEEE publisher page, or the official EUR-Lex text) before being added here.
@@ -31,14 +31,23 @@ Rumelhart, D. E., Hinton, G. E., & Williams, R. J. (1986). Learning representati
 
 Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł., & Polosukhin, I. (2017). Attention Is All You Need. *NeurIPS 2017*. arXiv:1706.03762. https://arxiv.org/abs/1706.03762
 
-*The Transformer architecture underlying every modern LLM discussed in [Chapter 7](part1/07-what-is-a-language-model.md) onward.*
+*The self-attention mechanism underlying every modern LLM discussed in [Chapter 7](part1/07-what-is-a-language-model.md) onward. Core contributions: self-attention (every token attends directly to every other in one parallel operation, eliminating the sequential hidden-state bottleneck of RNNs), multi-head attention (several attention patterns run in parallel, each tracking different token relationships), and positional encoding (order-invariant attention gets explicit position signals). Architecture note: the original paper uses an encoder-decoder stack designed for translation — a separate encoder reads the source language, the decoder generates the target. Modern generative LLMs (GPT, LLaMA, Mistral, and all their descendants) are decoder-only: they apply causal masking so each token attends only to preceding positions and omit the encoder entirely. Training is fully parallel over the sequence; inference is sequential because each generated token is fed back as input.*
+
+(ref-dlbook)=
+### Goodfellow, I., Bengio, Y., Courville A. (2016) - "Deep Learning" book
+
+Ian Goodfellow, Yoshua Bengio, Aaron Courville (2016).
+
+Deep Learning. MIT Press. https://www.deeplearningbook.org/contents/mlp.html
+
+*Mathematical foundations of layer-wise forward propagation — weight matrices, activation functions, bias vectors — treated rigorously in the *Deep Feedforward Networks* chapter. Referenced from [Chapter 7](part1/07-what-is-a-language-model.md) as background reading for the feedforward sublayer and embedding lookup mathematics that Transformer blocks share with classic MLPs. Note: the book was published in 2016, a year before the Transformer; self-attention and LLMs are not covered, but the linear-algebra and feedforward foundations apply directly.*
 
 (ref-bpe)=
 ### Sennrich, Haddow & Birch (2016) — Byte-Pair Encoding
 
 Sennrich, R., Haddow, B., & Birch, A. (2016). Neural Machine Translation of Rare Words with Subword Units. *ACL 2016*, 1715–1725. arXiv:1508.07909. https://arxiv.org/abs/1508.07909
 
-*The BPE tokenization scheme referenced when explaining tokens in [Chapter 7](part1/07-what-is-a-language-model.md).*
+*The BPE tokenization scheme referenced when explaining tokens in [Chapter 7](part1/07-what-is-a-language-model.md). Core idea: start with individual characters as the vocabulary; repeatedly merge the most frequent adjacent pair into a new single token; repeat until the vocabulary reaches a target size (typically 32K–100K). Common words get a single token; rare or invented words decompose into recognizable subword pieces — without an explicit "unknown word" fallback. The dominant family of generative LLM tokenizers today (GPT, LLaMA, Mistral, Gemma) are direct descendants. WordPiece, used by BERT-family models, and Unigram, used by some SentencePiece configurations, are distinct algorithms that co-exist alongside BPE in the broader ecosystem.*
 
 (ref-word2vec)=
 ### Mikolov et al. (2013) — word2vec
@@ -61,7 +70,7 @@ Malkov, Y. A., & Yashunin, D. A. (2018). Efficient and Robust Approximate Neares
 
 Holtzman, A., Buys, J., Du, L., Forbes, M., & Choi, Y. (2020). The Curious Case of Neural Text Degeneration. *ICLR 2020*. arXiv:1904.09751. https://arxiv.org/abs/1904.09751
 
-*Introduces nucleus (top-p) sampling and explains why greedy/beam decoding degenerates — the basis for [Chapter 14](part2/14-temperature-top-p-top-k.md).*
+*Introduces nucleus (top-p) sampling and demonstrates why greedy and beam-search decoding produce degenerate, repetitive output despite always picking "the best" token at each step — first cited in [Chapter 7](part1/07-what-is-a-language-model.md) when explaining temperature and sampling, and the basis for the fuller treatment in [Chapter 14](part2/14-temperature-top-p-top-k.md).*
 
 (ref-toolformer)=
 ### Schick et al. (2023) — Toolformer

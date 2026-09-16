@@ -33,7 +33,7 @@ The "working memory" attached to each individual request: your system prompt, co
 
 Introduced by [Lewis et al. (2020)](https://arxiv.org/abs/2005.11401): at request time, relevant documents are fetched from a vector store or search index and injected into the context window before the model generates its response. Instead of baking facts into weights or manually pasting them into every prompt, the model reads them on demand, like a running service querying a database instead of loading the whole table into memory at startup. Essential for large, fast-changing corpora: documentation, product catalogs, legal filings.
 
-For example a `price list` belongs on the third step, not the first. It changes too often for building it's weights and is too large to paste into every prompt.
+For example a `price list` data belongs to the third step, not the first. It changes too often for building it's weights and is too large to paste into every prompt.
 
 Notice what all three steps have in common: they all move data! `Fine-tuning` bakes your training data to a binary file through a training loop. Every `inference call` sends your system prompts, user inputs, and full conversation history through a context window on every single turn. `RAG` sends your retrieved documents, expertise from your internal knowledge base, your product catalog, your legal filings right into a context window before each request. 
 
@@ -64,7 +64,7 @@ A model checkpoint is your build artifact, the same role `.jar` plays after `mvn
 
 - **JLama** is the first Java native engine for self-contained LLM applications, it moves away from the traditional client-server model with an external services and embeds the model directly in your application, simplifying deployment and aligning the model's lifecycle with your application.
 
-- Juno is the only full-stack option to embed LLM onto java runtime. Fine-tuning and inference on CPU and GPU, from Raspberry Pi to cluster, using entirely java processes.
+- **Juno** is the only full-stack option to embed LLM onto java runtime. Fine-tuning and inference on CPU and GPU, from Raspberry Pi to cluster, using entirely java processes.
 
 ## Conclusions
 
@@ -74,6 +74,13 @@ Fine-tuning is no longer a cloud billing line item. With LoRA on a GPU with JVM-
 
 The three-steps of ML data management: weights, context, retrieval is not a framework someone invented. It falls directly out of the training/inference split: build steps are for durable behavior, runtime is for runtime data, and anything that changes faster than your release cadence belongs in a database, not in the weights.
 
+**Further reading:**
+
+- Hu, E. J. et al. (2021). [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685). *ICLR 2022* — the paper behind the weights rung of the ladder. Core idea: freeze the base model entirely; learn two small low-rank matrices whose product approximates the full weight update. Because the adapter matrices are tiny relative to the base model, training is fast, cheap, and GPU-light — and multiple adapters can be hot-swapped over the same base checkpoint at inference time without reloading the model.
+- Lewis, P. et al. (2020). [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401). *NeurIPS 2020* — the paper that named and formalised the third rung. Core idea: instead of encoding all facts into model weights at training time, retrieve relevant documents at request time and condition the generator on them. Separates "what the model knows how to do" (weights) from "what facts it has access to" (retrieval index) — making the knowledge component updatable without ever touching the weights.
+- Kwon, W. et al. (2023). [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180). *SOSP 2023* — the paper behind vLLM's throughput advantage in the engine table above. Core idea: manage the KV cache (the memory holding previously computed attention keys and values across a request) using OS-style virtual memory paging — allocating it in non-contiguous blocks rather than pre-reserving a fixed contiguous buffer per sequence. Eliminates most KV cache memory fragmentation and enables continuous batching across variable-length concurrent requests.
+
 ---
+
 
 [← Chapter 5: Neural Networks as Layers of Math: Matrices You Already Met in Graphics and Games](#ch-05) &nbsp;|&nbsp; [Table of Contents](../index.md) &nbsp;|&nbsp; [Chapter 7: What Is a Language Model? Tokens, Context Windows, and Why Chat Bots Feel Magical →](#ch-07)

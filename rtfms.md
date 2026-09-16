@@ -1,5 +1,5 @@
 (rtfms)=
-# rtfms.md — Read The F\*\*\*ing ManualS
+# rtfms.md — Read The Folking Manuals
 
 Sources for the specific inference-tool material in this book: CLI flags, REST endpoints, LoRA training/inference internals, and observability surfaces for the tools that keep coming up as comparison points — **Juno** (`cab.ml`, the JVM-native engine this book uses for most hands-on examples), **llama.cpp** (the C/C++ engine most of the local-LLM ecosystem is quietly built on top of), **LocalAI** (a Go-based, backend-agnostic server aimed at drop-in OpenAI API compatibility), **vLLM** (the Python/PyTorch high-throughput GPU engine), and **JLama** (the established pure-Java inference engine). General machine learning, LLM, and distributed-systems research sources are listed separately in [references.md](references.md).
 
