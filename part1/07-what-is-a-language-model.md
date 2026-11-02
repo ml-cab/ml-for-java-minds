@@ -22,7 +22,7 @@ flowchart LR
     D --> E["..."]
 ```
 
-**Deep Feedforward Networks** of Deep Learning book.
+For the layer-wise mathematics behind each of these steps, see the *Deep Feedforward Networks* chapter of [Goodfellow, Bengio & Courville (2016)](../references.md#ref-dlbook).
 
 ## What a Token Actually Is
 
@@ -34,9 +34,9 @@ Models do not operate on raw characters or whole words. They operate on **tokens
 "Juno"          →  ["J", "uno"]            	# 2 tokens
 ```
 
-Few edge cases we have to consider while integrating with neural network's tokenized data:
+A few edge cases to consider when integrating with a neural network's tokenized data:
 
-**Numbers may tokenize digit by digit.** Some tokenizers, like [Cohere-Command-R](https://docs.cohere.com/docs/tokens-and-tokenizers) can transform `1234` onto `["<BOS_TOKEN>", "1", "2", "3", "4"]` that is 5 separate tokens. `3.14159` becomes eight tokens. The model never sees `1234` as a unit; it sees four symbols that co-occur in certain patterns in training data. This is why LLMs are unreliable at arithmetic: they are not computing - they are predicting which digit tends to follow, based on everything they have seen. There is no calculator in the weights.
+**Numbers may tokenize digit by digit.** Some tokenizers, like [Cohere-Command-R](https://docs.cohere.com/docs/tokens-and-tokenizers) can transform `1234` into `["<BOS_TOKEN>", "1", "2", "3", "4"]` that is 5 separate tokens. `3.14159` becomes eight tokens. The model never sees `1234` as a unit; it sees four symbols that co-occur in certain patterns in training data. This is why LLMs are unreliable at arithmetic: they are not computing - they are predicting which digit tends to follow, based on everything they have seen. There is no calculator in the weights.
 
 **Code tokenizes differently from prose.** Indentation, brackets, underscores, and identifiers like `getUserById` may become `["get", "User", "By", "Id"]`, four tokens for one identifier. JSON, XML, and SQL tend to be token-expensive relative to their information content.
 
@@ -98,7 +98,7 @@ Three elements in this diagram worth unpacking explicitly:
 
 **Silent truncation** - when the window fills, content is cut without error. The model does not tell you it has forgotten the beginning of the document. This is the most common silent failure mode in production systems built on long context.
 
-**Chat template.** Raw token prediction has no built-in concept of "user" and "assistant" turns; that structure is imposed by wrapping messages in special marker tokens (`<|user|>`, `<|assistant|>`, `<|system|>`, etc.) defined per model family. Use the wrong template and the model's trained behaviors degrade: a frequent real bug when switching model families while reusing wrong marker codesS.
+**Chat template.** Raw token prediction has no built-in concept of "user" and "assistant" turns; that structure is imposed by wrapping messages in special marker tokens (`<|user|>`, `<|assistant|>`, `<|system|>`, etc.) defined per model family. Use the wrong template and the model's trained behaviors degrade: a frequent real bug when switching model families while reusing the wrong marker codes.
 
 ## Temperature and Sampling: Why the Same Prompt Gives Different Answers
 
@@ -129,7 +129,7 @@ It is none of those things in the way a database or symbolic AI system has them.
 - Vaswani, A. et al. (2017). [Attention Is All You Need](https://arxiv.org/abs/1706.03762). *NeurIPS 2017* - replaced sequential recurrence with parallel self-attention. The key insight: instead of carrying context through a bottleneck hidden state, let every token attend directly to every other token in one matrix operation. Multi-head attention, positional encoding, and the encoder-decoder stack introduced here are the direct ancestors of every modern LLM.
 - Sennrich, R., Haddow, B., & Birch, A. (2016). [Neural Machine Translation of Rare Words with Subword Units](https://arxiv.org/abs/1508.07909). *ACL 2016* - the BPE paper. Core insight: you do not need a fixed word vocabulary with an "unknown" fallback; instead, iteratively merge the most frequent character pairs until the vocabulary reaches a target size. Common words get a single token; rare or invented words decompose into recognizable pieces. Every tokenizer in use today is a direct descendant.
 - Holtzman, A. et al. (2020). [The Curious Case of Neural Text Degeneration](https://arxiv.org/abs/1904.09751). *ICLR 2020* - introduces nucleus (top-p) sampling and demonstrates why greedy and beam-search decoding produce degenerate, repetitive output despite picking "the best" tokens at each step. The paper that made temperature + top-p the default in every production API.
-- Goodfellow, I., Bengio, Y., & Courville, A. (2016). [Deep Learning](https://www.deeplearningbook.org/contents/mlp.html). MIT Press - for readers who want the layer-wise mathematics (weight matrices, activation functions, forward propagation) treated rigorously in a textbook setting. The *Deep Feedforward Networks* chapter covers the building blocks shared by Transformer FFN sublayers and the embedding lookup. Note: the book was published in 2016, a year before the Transformer; self-attention is not covered, but the feedforward and linear-algebra foundations apply directly.
+- Goodfellow, I., Bengio, Y., & Courville, A. (2016). [Deep Learning](https://www.deeplearningbook.org/contents/mlp.html). MIT Press ([References](../references.md#ref-dlbook)) - for readers who want the layer-wise mathematics (weight matrices, activation functions, forward propagation) treated rigorously in a textbook setting. The *Deep Feedforward Networks* chapter covers the building blocks shared by Transformer FFN sublayers and the embedding lookup. Note: the book was published in 2016, a year before the Transformer; self-attention is not covered, but the feedforward and linear-algebra foundations apply directly.
 ---
 
-[← Chapter 6: Training vs Inference: Compile-Time Thinking vs Runtime Serving](#ch-06) &nbsp;|&nbsp; [Table of Contents](../index.md) &nbsp;|&nbsp; [Chapter 8: Why Python Dominates ML. And Why That Shouldn't Trap Your Java Stack →](#ch-08)
+[← Chapter 6: Training vs Inference: Compile-Time Thinking vs Runtime Serving](#ch-06) &nbsp;|&nbsp; [Table of Contents](../index.md) &nbsp;|&nbsp; [Chapter 8: Same Matrix Multiply, Different Hardware: A Tour of JVM Inference Engines →](#ch-08)

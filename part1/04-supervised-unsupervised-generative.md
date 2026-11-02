@@ -10,7 +10,7 @@ If ML techniques were design patterns, here's the cheat sheet:
 
 **Generative AI**: the newest member, and the odd one out. Instead of predicting a label or finding structure, it learns the underlying *distribution* of the data well enough to produce brand-new, plausible examples: new text, new images, new code. A large language model (LLM) is a generative model trained, at its core, on a deceptively simple supervised task, predicting the next word, applied at a scale that makes the resulting function able to write essays, translate, and summarize.
 
-| The need | Use case learning |
+| The need | Learning type |
 |---|---|
 | Learn the mapping | **Supervised**: (input, correct output) pairs |
 | Learn the structure | **Unsupervised**: input only, no labels |

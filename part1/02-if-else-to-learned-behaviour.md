@@ -19,7 +19,7 @@ This works until spammers stop using those words. You add more rules. Spammers a
 
 This is the classic sign that a problem wants a model instead of a rulebook: **the rules are numerous, contradictory in edge cases, and drift over time faster than you can patch them.**
 
-A learned model doesn't encode "if message contains smell" It encodes statistical patterns across thousands of features (word frequencies, sender reputation, formatting quirks) discovered automatically from labeled examples of spam and non-spam. When spam evolves, you retrain on new examples instead of hand-editing a decision tree of exceptions.
+A learned model doesn't encode "if message contains smell". It encodes statistical patterns across thousands of features (word frequencies, sender reputation, formatting quirks) discovered automatically from labeled examples of spam and non-spam. When spam evolves, you retrain on new examples instead of hand-editing a decision tree of exceptions.
 
 | Use `if/else` when... | Use a learned model when... |
 |---|---|
@@ -32,7 +32,7 @@ This isn't a value judgment, because `if/else` is *usually* the right tool, test
 
 Spam filtering is a classic example because it demonstrates concept drift, the statistical properties of the data change over time. So if you can describe the rule precisely, write code. If you need a thing to discover the rule from examples, train a model.
 
-A practical rule of thumb: **keep the boring 80% in plain code, and let the model own only the fuzzy 20%.** E.g. a billing system may use `if/else` for tax rules and a model (if anything) only for fraud-likelihood scoring. Mixing both code for the parts you can specify exactly and models for the parts you can't, brings some balance in our rapid learning world.
+A practical rule of thumb: **keep the boring 80% in plain code, and let the model own only the fuzzy 20%.** E.g. a billing system may use `if/else` for tax rules and a model (if anything) only for fraud-likelihood scoring. Mixing both, code for the parts you can specify exactly and models for the parts you can't, keeps the system balanced and maintainable.
 
 ---
 

@@ -1,6 +1,6 @@
 # ML for Java Minds
 
-A 34-chapter book, built as a [Jupyter Book](https://jupyterbook.org) (MyST Document Engine) static site.
+A 44-chapter book, built as a [Jupyter Book](https://jupyterbook.org) (MyST Document Engine) static site.
 
 ![](ml-4-java-minds.jpg)
 
@@ -10,11 +10,13 @@ A 34-chapter book, built as a [Jupyter Book](https://jupyterbook.org) (MyST Docu
 ml-for-java-minds/
 ├── myst.yml              # project config + table of contents (chapter order)
 ├── index.md               # front matter, "how to read this book", full TOC
-├── references.md          # Back matter - official sources behind this book
+├── references.md          # Back matter - peer-reviewed and official sources behind this book
+├── rtfms.md               # Back matter - documentation for the specific inference tools
 ├── part1/                 # Beginner:      chapters 1-9
 ├── part2/                 # Intermediate:  chapters 10-21
 ├── part3/                 # Advanced:      chapters 22-29
 ├── part4/                 # Professional:  chapters 30-34
+├── part5/                 # Beyond LLMs:   chapters 35-44
 └── build.sh                # checks/installs the myst CLI and builds static HTML
 ```
 

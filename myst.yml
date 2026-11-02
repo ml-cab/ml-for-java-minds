@@ -15,7 +15,7 @@ project:
         - file: part1/05-neural-networks-as-layers-of-math.md
         - file: part1/06-training-vs-inference.md
         - file: part1/07-what-is-a-language-model.md
-        - file: part1/08-why-python-dominates-ml.md
+        - file: part1/08-tour-of-inference-engines.md
         - file: part1/09-vectors-and-similarity.md
     - title: "Part II. Intermediate: LLMs and Practical Paths"
       children:

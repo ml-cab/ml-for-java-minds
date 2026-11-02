@@ -26,4 +26,4 @@ The practical decision rule: if your input is a table with a fixed, well-underst
 
 ---
 
-[← Chapter 34: Compliance for Generative Apps](../part4/34-compliance-for-generative-apps.md) &nbsp;|&nbsp; [Table of Contents](../index.md) &nbsp;|&nbsp; [Chapter 36: Loss Functions, Gradient Descent, and the Bias-Variance Trade-off →](#ch-36)
+[← Chapter 34: Compliance for Generative Apps](#ch-34) &nbsp;|&nbsp; [Table of Contents](../index.md) &nbsp;|&nbsp; [Chapter 36: Loss Functions, Gradient Descent, and the Bias-Variance Trade-off →](#ch-36)

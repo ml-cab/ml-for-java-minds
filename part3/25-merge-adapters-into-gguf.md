@@ -40,7 +40,7 @@ bot > Juno
 
 *(the `juno merge` command and its `f32-preserve` default policy shown above, [Juno Documentation §4.5](../rtfms.md#ref-juno-merging-adapters))*
 
-Expect a modest file size increase from this trade-off: a TinyLlama Q4_K_M base around 667 MB produces a merged file around 1 GB, because 44 tensors moved from ~4.5 bits/weight to 32 bits/weight while everything else stayed the same size.
+Expect a modest file size increase from this trade-off: a TinyLlama Q4_K_M base of about 667.8 MB produces a merged file around 1 GB, because 44 tensors moved from ~4.5 bits/weight to 32 bits/weight while everything else stayed the same size.
 
 **When to merge versus keep the adapter separate:** merge when you're shipping a single, stable, production model artifact and want zero runtime overlay complexity: one file, one deployment, one thing to version. Keep the adapter separate (via a read-only inference overlay, [Chapter 24](#ch-24)) when you have many specializations of the same base model and want to swap between them without duplicating the multi-gigabyte base weights for each one: the classic space/simplicity trade-off, decided per deployment, not universally.
 

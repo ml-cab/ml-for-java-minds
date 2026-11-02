@@ -21,7 +21,7 @@ flowchart LR
  
 Three ideas carry the rest of this book:
  
-**Training** is searching for good weight values. You feed data. An algorithm computes how wrong the outputs are, then nudges every weight in the direction that reduces that error - layer by layer, backward through the network. This is the so-called Backward Pass. The optimizer steering those nudges is the blessed `ADAM` gradient algorithm. It is genuinely the most magical part, and later we will gets into how it actually works [Chapter 6](#ch-06).
+**Training** is searching for good weight values. You feed data. An algorithm computes how wrong the outputs are, then nudges every weight in the direction that reduces that error - layer by layer, backward through the network. This is the so-called Backward Pass. The optimizer steering those nudges is the blessed `ADAM` gradient algorithm. It is genuinely the most magical part, and later we will get into how it actually works in [Chapter 36](#ch-36).
  
 **Inference** is running the already-trained function on new input. The Forward Pass. Input goes in, output comes out. Deterministic matrix math. This is the part that looks like calling a method in production - fast, repeatable, no learning happening.
  
@@ -29,8 +29,8 @@ Three ideas carry the rest of this book:
  
 ---
  
-**Why this maps cleanly for Java developers.** The training vs inference split is compile-time vs. runtime - a distinction you've internalized deeply. Training is slow, expensive, done once or occasionally. Inference is fast, done on every request. A model is only as good as its training data [Chapter 3](#ch-03), same as code is only as good as its test coverage. Nothing here requires you to abandon engineering instincts. It requires redirecting them at a new kind of artifact: a weights file instead of a `.jar`.
+**Why this maps cleanly for Java developers.** The training vs inference split is compile-time vs. runtime - a distinction you've internalized deeply. Training is slow, expensive, done once or occasionally. Inference is fast, done on every request. A model is only as good as its training data ([Chapter 3](#ch-03)), the same way code is only as good as its test coverage. Nothing here requires you to abandon engineering instincts. It requires redirecting them at a new kind of artifact: a weights file instead of a `.jar`.
  
 That's the mental model. The rest of the book builds on it.
 
-[Table of Contents](../index.md) &nbsp;|&nbsp; [Chapter 2: From if/else Rules to Learned Behaviour: When Models Replace Hard-Coded Logic →](#ch-02)
+[Table of Contents](../index.md) &nbsp;|&nbsp; [Chapter 2: From if/else Rules to Learned Behavior: When Models Replace Hard-Coded Logic →](#ch-02)

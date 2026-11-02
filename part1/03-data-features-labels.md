@@ -32,4 +32,4 @@ Experienced ML teams often spend 70–80% of a project's time collecting, cleani
 
 ---
 
-[← Chapter 2: From if/else Rules to Learned Behaviour: When Models Replace Hard-Coded Logic](#ch-02) &nbsp;|&nbsp; [Table of Contents](../index.md) &nbsp;|&nbsp; [Chapter 4: Supervised, Unsupervised, and Generative AI. Explained Like Design Patterns →](#ch-04)
+[← Chapter 2: From if/else Rules to Learned Behavior: When Models Replace Hard-Coded Logic](#ch-02) &nbsp;|&nbsp; [Table of Contents](../index.md) &nbsp;|&nbsp; [Chapter 4: Supervised, Unsupervised, and Generative AI. Explained Like Design Patterns →](#ch-04)

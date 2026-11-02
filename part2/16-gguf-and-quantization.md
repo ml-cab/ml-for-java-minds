@@ -24,7 +24,7 @@ flowchart LR
     A["FP32 weight matrix<br/>4 bytes/value<br/>28 GB for a 7B model"] -->|quantize| B["Q4_K matrix<br/>~0.5 bytes/value<br/>~4.1 GB for the same model"]
 ```
 
-Practically: a TinyLlama 1.1B model at `Q4_K_M` needs roughly 637 MB and runs comfortably in a couple gigabytes of heap; a 7B Mistral at the same quantization needs roughly 4.1 GB. This is *why* quantized GGUF became the default distribution format for local and edge inference: it turns "needs a data-center GPU" into "runs on a developer laptop's CPU," at the cost of some precision that, at `Q4_K_M` and above, is usually indistinguishable from full precision for everyday use.
+Practically: a TinyLlama 1.1B model at `Q4_K_M` needs roughly 667.8 MB and runs comfortably in a couple gigabytes of heap; a 7B Mistral at the same quantization needs roughly 4.1 GB. This is *why* quantized GGUF became the default distribution format for local and edge inference: it turns "needs a data-center GPU" into "runs on a developer laptop's CPU," at the cost of some precision that, at `Q4_K_M` and above, is usually indistinguishable from full precision for everyday use.
 
 One consequence worth knowing for later chapters: the numerical "noise" introduced by quantization (on the order of ~3×10⁻³ per element at Q4_K) turns out to matter a great deal when you fine-tune and then try to re-quantize the result: [Chapter 25](#ch-25) covers exactly why.
 
