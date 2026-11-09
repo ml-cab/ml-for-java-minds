@@ -138,7 +138,7 @@ JitLLMChatModel model = JitLLMChatModel.builder()
     .build();
 ```
 
-   And finally **Juno**, which reads the GGUF file directly and talks to CUDA/ROCm through Panama, with no JNI wrapper library, no Python, and no separate process to keep alive:
+   And finally **Juno**, which reads the [GGUF](https://github.com/ggml-org/ggml/blob/master/docs/gguf.md) file directly and talks to CUDA/ROCm through Panama, with no JNI wrapper library and no separate process to keep alive:
 
 ```java
 try (JunoPlayer player = JunoPlayer.builder(Path.of("/models/model.gguf"))
@@ -156,18 +156,25 @@ try (JunoPlayer player = JunoPlayer.builder(Path.of("/models/model.gguf"))
 
 The takeaway isn't "Python bad, Java good": it's that **the language the model was trained in has nothing to do with the language that must serve it.** A GGUF file is a portable, language-agnostic weights format. Pick the serving path (subprocess-via-HTTP, or in-process-via-JVM) based on your operational constraints, not habit.
 
+Notice what the tables above does not say: it makes no speed claims. Throughput really depends on your GPU's/CPU's memory bandwidth, the quantization level and size of the model file. However in [Chapter 26](#ch-26) we will be doing detailed testing of several approaches listed above.
 
 **Further reading:**
+- OpenJDK. [JEP 448: Vector API (Sixth Incubator)](https://openjdk.org/jeps/448) and [JEP 454: Foreign Function & Memory API](https://openjdk.org/jeps/454) ([rtfms](../rtfms.md#ref-jep-vector-api), [rtfms](../rtfms.md#ref-jep-ffm)) - the two platform features that make pure-Java inference fast enough to be useful. The Vector API has been re-incubated in several JDK releases, so check the current JEP for your JDK version;
+- The [GGUF](https://github.com/ggml-org/ggml/blob/master/docs/gguf.md) file format specification.
 
-- ggml-org. *llama.cpp*, [`tools/server/README.md`](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md) ([rtfms entry](../rtfms.md#ref-llamacpp-server)) - the canonical reference for `llama-server`: build options, every CLI flag, and the OpenAI-compatible endpoints used by the examples above. Flags move between releases, so treat the live README as authoritative over any snippet in this book. Ollama: [github.com/ollama/ollama](https://github.com/ollama/ollama) ([rtfms entry](../rtfms.md#ref-ollama)).
-- vLLM Project. [OpenAI-Compatible Server](https://docs.vllm.ai/en/latest/serving/online_serving/openai_compatible_server/) ([rtfms](../rtfms.md#ref-vllm-openai-api)) · Hugging Face. [Text Generation Inference: Messages API](https://huggingface.co/docs/text-generation-inference/en/messages_api) ([rtfms](../rtfms.md#ref-tgi-openai-api)) · Di Giacinto, E. et al. [LocalAI Overview](https://localai.io/docs/overview/index.html) ([rtfms](../rtfms.md#ref-localai-openai-api)) - the other "talk to it over HTTP" options from path 1, each documenting the shared wire format and its own deviations Juno's side of the same contract is in [§5.2 OpenAI-Compatible API](../rtfms.md#ref-juno-openai-api).
-- Luciani, T. J. (2024). [*Jlama: A modern LLM inference engine for Java*](https://github.com/tjake/Jlama) ([rtfms](../rtfms.md#ref-jlama-readme)) - Maven coordinates, CLI, supported model families, and required JVM flags. For context, see InfoQ (2024), [JLama: The First Pure Java Model Inference Engine Implemented With Vector API and Project Panama](https://www.infoq.com/news/2024/05/jlama-llm-inference-java).
-- Peterssen, A. [*Llama3.java*](https://github.com/mukel/llama3.java) ([rtfms](../rtfms.md#ref-llama3-java)) - the single-file engine; reading it is the fastest way to see a complete transformer forward pass, GGUF parser and tokenizer in one place. Its README credits Karpathy, A., [*llama2.c*](https://github.com/karpathy/llama2.c) ([rtfms](../rtfms.md#ref-llama2c)) as the ancestor of the idea.
-- TornadoVM project. [*jitLLM*](https://www.tornadovm.org/jitllm) ([rtfms](../rtfms.md#ref-jitllm)) and [*TornadoVM Documentation*](https://tornadovm.readthedocs.io/en/latest/) ([rtfms](../rtfms.md#ref-tornadovm)) - GPU inference from plain Java; artifact versions and supported models change quickly, so check the documentation pages before adding a dependency.
-- Kherud. [*java-llama.cpp*](https://github.com/kherud/java-llama.cpp) ([rtfms](../rtfms.md#ref-java-llama-cpp)) - JNI bindings for llama.cpp, the pragmatic choice when you want llama.cpp's exact behavior inside a JVM and accept shipping native libraries.
-- OpenJDK. [JEP 448: Vector API (Sixth Incubator)](https://openjdk.org/jeps/448) and [JEP 454: Foreign Function & Memory API](https://openjdk.org/jeps/454) ([rtfms](../rtfms.md#ref-jep-vector-api), [rtfms](../rtfms.md#ref-jep-ffm)) - the two platform features that make pure-Java inference fast enough to be useful. The Vector API has been re-incubated in several JDK releases, so check the current JEP for your JDK version.
+_References:_
+- ggml-org. *llama.cpp*, [`tools/server/README.md`](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md) ([rtfms entry](../rtfms.md#ref-llamacpp-server)) - the canonical reference for `llama-server`: build options, every CLI flag, and the OpenAI-compatible endpoints used by the examples above. Flags move between releases, so treat the live README as authoritative over any snippet in this book;
+- Ollama: [github.com/ollama/ollama](https://github.com/ollama/ollama) ([rtfms entry](../rtfms.md#ref-ollama));
+- vLLM Project. [OpenAI-Compatible Server](https://docs.vllm.ai/en/latest/serving/online_serving/openai_compatible_server/) ([rtfms](../rtfms.md#ref-vllm-openai-api));
+- Hugging Face. [Text Generation Inference: Messages API](https://huggingface.co/docs/text-generation-inference/en/messages_api) ([rtfms](../rtfms.md#ref-tgi-openai-api));
+- Di Giacinto, E. et al. [LocalAI Overview](https://localai.io/docs/overview/index.html) ([rtfms](../rtfms.md#ref-localai-openai-api));
+- the other "talk to it over HTTP" options from path 1, each documenting the shared wire format and its own deviations Juno's side of the same contract is in [§5.2 OpenAI-Compatible API](../rtfms.md#ref-juno-openai-api);
+- Luciani, T. J. (2024). [*Jlama: A modern LLM inference engine for Java*](https://github.com/tjake/Jlama) ([rtfms](../rtfms.md#ref-jlama-readme));
+- Maven coordinates, CLI, supported model families, and required JVM flags. For context, see InfoQ (2024), [JLama: The First Pure Java Model Inference Engine Implemented With Vector API and Project Panama](https://www.infoq.com/news/2024/05/jlama-llm-inference-java);
+- Peterssen, A. [*Llama3.java*](https://github.com/mukel/llama3.java) ([rtfms](../rtfms.md#ref-llama3-java)) - the single-file engine; reading it is the fastest way to see a complete transformer forward pass, GGUF parser and tokenizer in one place. Its README credits Karpathy, A., [*llama2.c*](https://github.com/karpathy/llama2.c) ([rtfms](../rtfms.md#ref-llama2c)) as the ancestor of the idea;
+- TornadoVM project. [*jitLLM*](https://www.tornadovm.org/jitllm) ([rtfms](../rtfms.md#ref-jitllm)) and [*TornadoVM Documentation*](https://tornadovm.readthedocs.io/en/latest/) ([rtfms](../rtfms.md#ref-tornadovm)) - GPU inference from plain Java; artifact versions and supported models change quickly, so check the documentation pages before adding a dependency;
+- Kherud. [*java-llama.cpp*](https://github.com/kherud/java-llama.cpp) ([rtfms](../rtfms.md#ref-java-llama-cpp)) - JNI bindings for llama.cpp, the pragmatic choice when you want llama.cpp's exact behavior inside a JVM and accept shipping native libraries;
 - *Juno Documentation*, [§1.2 Quickstart: Local Player](../rtfms.md#ref-juno-quickstart-local), [§1.3 Quickstart: JVM Embedding](../rtfms.md#ref-juno-jvm-embedding) and [§6.2 AWS Deployment](../rtfms.md#ref-juno-aws-deployment) - the in-process facade used in the example above, and the scripts that take it to an AWS cluster. Juno is maintained by the author of this book; the comparison table above is deliberately limited to what each project documents about itself.
-- For the techniques that make these engines fast on CPU and GPU, see [Chapter 26](#ch-26); for the cited background, [References](../references.md) and [rtfms](../rtfms.md).
 
 ---
 

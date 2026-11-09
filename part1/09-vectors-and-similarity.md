@@ -1,14 +1,12 @@
 (ch-09)=
-# 9. Vectors and Similarity, Not Just Embeddings: Cosine, Dot Product, and Why "Closeness" Works
-Before [Chapter 10](#ch-10) introduces embeddings properly, you need one geometric idea: numbers arranged as a vector can represent *meaning*, and the distance between two vectors can represent *similarity of meaning*.
+# 9. Vectors and Similarity: Cosine, Dot Product and Why "Closeness" Works
+Let's picture one geometric assumption: a word or a whole sentence, turned into a list of numbers becomes a vector. The direction of such vector carries its meaning, and the angle between two vectors tells you how similar their meanings are.
 
-A vector here is just what it is in any graphics or physics code you've written: an ordered array of numbers, `double[]` or `float[]`, but instead of representing a position in 3D space, it represents a position in a space with hundreds or thousands of dimensions, where "nearby" means "semantically similar."
+A vector here is just what it is. In any graphics or physics code you've written: an ordered array of fixed point numbers, but instead of representing a position in 3D space, it represents a position in a space with hundreds or thousands of dimensions, where "nearby" means "semantically similar."
 
-That's a strange claim to take on faith, and the last section of this chapter gets into why it holds at all. First, though, it helps to pin down how "nearby" is actually computed, because the arithmetic itself is unglamorous, the same multiply-and-sum you'd already write to compute a lighting angle or a projection in a graphics or physics routine.
+### Two standard ways to measure "nearby"
 
-Two standard ways to measure "nearby":
-
-**Dot product**: multiply corresponding elements and sum:
+**Dot product.** Take two vectors, `a` and `b`. Shine a light from above so that `b` casts a "shadow" onto the line along which `a` lies. The dot product is the length of `a` multiplied by the length of that shadow. In plain words: it measures how strongly the two vectors look in the same direction.
 
 ```java
 double dot(double[] a, double[] b) {
@@ -18,7 +16,18 @@ double dot(double[] a, double[] b) {
 }
 ```
 
-**Cosine similarity**: the dot product normalized by each vector's length, so it measures the *angle* between vectors, ignoring their magnitude:
+**Cosine similarity**: the dot product normalized by each vector's length, so it measures the *angle* between vectors, ignoring their magnitude and determines co-directionality.
+
+```mermaid
+flowchart LR
+    Origin(( )) -->|0| Dog["'dog'"]
+    Origin -->|small angle| Puppy["'puppy'"]
+    Origin -->|large angle| Spreadsheet["'spreadsheet'"]
+    Dog -.->|high cosine similarity: similar meaning| Puppy
+    Puppy -.->|low similarity: unrelated meaning| Spreadsheet
+```
+
+In code, it is the dot product normalized by each vector's length, so it measures the *angle* and ignores the magnitude:
 
 ```java
 double cosineSimilarity(double[] a, double[] b) {
@@ -30,32 +39,23 @@ double cosineSimilarity(double[] a, double[] b) {
 
 Cosine similarity returns a value from -1 (opposite meaning) to 1 (identical direction, i.e. same meaning), with 0 meaning unrelated (in theory; fact 7 below explains why real models rarely give exactly that). It's the default choice for text similarity because it cares about *direction* (what the text is about) rather than *magnitude* (how long the text is).
 
+
 ```mermaid
 flowchart LR
-    Origin(( )) -->|small angle| Dog["'dog'"]
-    Origin -->|small angle| Puppy["'puppy'"]
-    Origin -->|large angle| Spreadsheet["'spreadsheet'"]
-    Dog -.->|high cosine similarity: similar meaning| Puppy
-    Puppy -.->|low similarity: unrelated meaning| Spreadsheet
+    T0["θ = 0°<br/>cos = 1.00<br/>same direction<br/>(same meaning)"] -->|"turn one vector"| T1["θ = 30°<br/>cos ≈ 0.87<br/>closely related"]
+    T1 -->|"turn more"| T2["θ = 60°<br/>cos = 0.50<br/>loosely related"]
+    T2 -->|"turn more"| T3["θ = 90°<br/>cos = 0<br/>unrelated"]
+    T3 -->|"turn more"| T4["θ = 180°<br/>cos = -1<br/>pointing opposite ways"]
 ```
+
 
 Why should this work at all? Why would "meaning" correspond to geometric direction? Because these vectors (called **embeddings**, covered fully next chapter) are *trained* so that words and sentences used in similar contexts end up pointing in similar directions, an empirical finding first demonstrated at scale by [Mikolov et al. (2013)](../references.md#ref-word2vec) with word2vec. The underlying idea is older than neural networks: linguists argued in the 1950s that a word's meaning shows in the contexts it appears in, as in Firth's line that you shall know a word by the company it keeps ([Harris, 1954](../references.md#ref-harris-distributional); [Firth, 1957](../references.md#ref-firth-synopsis)), and document vectors compared by angle date back to [Salton et al. (1975)](../references.md#ref-vsm). It's an emergent property of training on massive text, not something anyone hand-designed, much like how a hash function is designed to scatter similar-looking inputs apart, an embedding model is trained to cluster similar-*meaning* inputs together.
 
-## Eight Small Facts About Vectors and Closeness
+## Some Facts About Vectors and Closeness
 
-The following facts are not needed to *use* embeddings, but each one explains a behavior that otherwise looks like a bug. They are written in plain words on purpose.
+Let's go through several facts about vectors and closeness. You don't need them to use embeddings, but each one explains a behavior that otherwise looks like a bug.
 
-**1. In many dimensions, almost everything is at a right angle.** Pick two random directions in 3D and they often point somewhere similar. Pick two random directions in 768 dimensions and they are almost always nearly perpendicular, with a cosine very close to 0. Run this in Java and see:
-
-```text
-// output of a small Java program: two random unit vectors, 2,000 pairs per row
-dim=   3  avg |cos|=0.506  max |cos|=1.000
-dim= 100  avg |cos|=0.079  max |cos|=0.373
-dim= 768  avg |cos|=0.029  max |cos|=0.132
-dim=1536  avg |cos|=0.020  max |cos|=0.090
-```
-
-The typical size of a random cosine shrinks like `1/sqrt(dimensions)`. That is why a cosine of 0.5 between two real embeddings is a loud signal: random noise at that size would be extraordinarily rare. High dimensions also leave room for a huge number of directions that are all nearly perpendicular to each other, which is how one vector space can hold thousands of different topics without them crowding each other.
+**1. In many dimensions, almost everything is at a right angle.** Pick two random directions in 3D and they often point somewhere similar. Pick two random directions in 768 dimensions and they are almost always nearly perpendicular, with a cosine very close to 0. The typical size of a random cosine shrinks like `1/sqrt(dimensions)`. That is why a cosine of 0.5 between two real embeddings is a loud signal: random noise at that size would be extraordinarily rare. High dimensions also leave room for a huge number of directions that are all nearly perpendicular to each other, which is how one vector space can hold thousands of different topics without them crowding each other.
 
 **2. Normalize once, and cosine becomes a plain dot product.** If every vector is scaled to length 1 when you store it, the length terms in the cosine formula are both 1 and vanish. Search then needs only the multiply-and-sum loop, with no square roots at query time. This is why many vector stores keep normalized vectors, and why a dot-product index and a cosine index give the same ranking for such data.
 
@@ -71,7 +71,7 @@ The typical size of a random cosine shrinks like `1/sqrt(dimensions)`. That is w
 
 **8. Some vectors become popular for no good reason.** In high dimensions a few "hub" points show up in the top-K lists of many unrelated queries, a phenomenon called *hubness* ([Radovanović et al., 2010](../references.md#ref-hubness)). If one document keeps appearing in your RAG results ([Chapter 18](#ch-18)) for questions it has nothing to do with, this is a suspect.
 
-**Bonus: arithmetic with meaning.** In the word2vec space, the offset from `man` to `woman` points in nearly the same direction as the offset from `king` to `queen`, so `king - man + woman` lands near `queen` ([Mikolov, Yih & Zweig, 2013](../references.md#ref-linguistic-regularities)). It works best as a party trick: the effect is approximate, and implementations usually exclude the input words from the answer list. But it shows that *directions*, not only positions, carry meaning.
+**9. Arithmetic with meaning.** In the word2vec space, the offset from `man` to `woman` points in nearly the same direction as the offset from `king` to `queen`, so `king - man + woman` lands near `queen` ([Mikolov, Yih & Zweig, 2013](../references.md#ref-linguistic-regularities)). It works best as a party trick: the effect is approximate, and implementations usually exclude the input words from the answer list. But it shows that *directions*, not only positions, carry meaning.
 
 This one idea, turning things into vectors and measuring closeness with cosine or dot product, is the mathematical foundation underneath semantic search, recommendation systems, RAG ([Chapter 18](#ch-18)), and vector databases ([Chapter 11](#ch-11)). Once it clicks, a large fraction of "AI-powered search" products stop looking like magic and start looking like an indexing problem you already know how to reason about.
 
